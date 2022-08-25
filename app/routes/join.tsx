@@ -23,20 +23,27 @@ export async function action({ request }: ActionArgs) {
   const password = formData.get("password");
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
+  function generateErrorMessage(
+    name: null | string = null,
+    lastName: null | string = null,
+    phone: null | string = null,
+    email: null | string = null,
+    password: null | string = null
+  ) {
+    return { name, lastName, phone, email, password };
+  }
+
   if (typeof name !== "string" || name.length === 0) {
-    return json({ errors: { name: "Name is required" } }, { status: 400 });
+    return json(
+      { errors: generateErrorMessage("Name is required") },
+      { status: 400 }
+    );
   }
 
   if (typeof lastName !== "string" || lastName.length === 0) {
     return json(
       {
-        errors: {
-          name: null,
-          lastName: "Last name is required",
-          phone: null,
-          email: null,
-          password: null,
-        },
+        errors: generateErrorMessage(null, "Last name is required"),
       },
       { status: 400 }
     );
@@ -45,13 +52,7 @@ export async function action({ request }: ActionArgs) {
   if (typeof phone !== "string" || phone.length === 0) {
     return json(
       {
-        errors: {
-          name: null,
-          lastName: null,
-          phone: "Phone is required",
-          email: null,
-          password: null,
-        },
+        errors: generateErrorMessage(null, null, "Phone is required"),
       },
       { status: 400 }
     );
@@ -60,13 +61,7 @@ export async function action({ request }: ActionArgs) {
   if (!validatePhone(phone)) {
     return json(
       {
-        errors: {
-          name: null,
-          lastName: null,
-          phone: "Phone is invalid",
-          email: null,
-          password: null,
-        },
+        errors: generateErrorMessage(null, null, "Phone is invalid"),
       },
       { status: 400 }
     );
@@ -75,13 +70,7 @@ export async function action({ request }: ActionArgs) {
   if (!validateEmail(email)) {
     return json(
       {
-        errors: {
-          name: null,
-          lastName: null,
-          phone: null,
-          email: "Email is invalid",
-          password: null,
-        },
+        errors: generateErrorMessage(null, null, null, "Email is invalid"),
       },
       { status: 400 }
     );
@@ -105,13 +94,13 @@ export async function action({ request }: ActionArgs) {
   if (password.length < 8) {
     return json(
       {
-        errors: {
-          name: null,
-          lastName: null,
-          phone: null,
-          email: null,
-          password: "Password is too short",
-        },
+        errors: generateErrorMessage(
+          null,
+          null,
+          null,
+          null,
+          "Password is too short"
+        ),
       },
       { status: 400 }
     );
@@ -121,13 +110,12 @@ export async function action({ request }: ActionArgs) {
   if (existingUser) {
     return json(
       {
-        errors: {
-          name: null,
-          lastName: null,
-          phone: null,
-          email: "A user already exists with this email",
-          password: null,
-        },
+        errors: generateErrorMessage(
+          null,
+          null,
+          null,
+          "A user already exists with this email"
+        ),
       },
       { status: 400 }
     );
