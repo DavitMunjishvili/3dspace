@@ -8,14 +8,17 @@ generator client {
 }
 
 model User {
-  id    String @id @default(cuid())
-  email String @unique
+  id       String @id @default(cuid())
+  name     String
+  lastName String
+  phone    String @unique
+  email    String @unique
+  role     String @default("customer")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   password Password?
-  notes    Note[]
 }
 
 model Password {
@@ -25,14 +28,15 @@ model Password {
   userId String @unique
 }
 
-model Note {
-  id    String @id @default(cuid())
-  title String
-  body  String
+model Product {
+  id            String   @id @default(cuid())
+  name          String
+  description   String?
+  originalPrice String
+  currentPrice  String?
+  categories    String[]
+  archive       Boolean  @default(false)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId String
 }
