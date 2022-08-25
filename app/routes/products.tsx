@@ -1,12 +1,11 @@
 import type { Product } from "@prisma/client";
-import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { Form } from "@remix-run/react";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import ProductCard from "~/components/ProductCard";
 import { getAllProduct, getFilters } from "~/models/product.server";
 
-export async function loader({}: LoaderArgs) {
+export async function loader() {
   const filters = await getFilters();
   const products = await getAllProduct();
   if (products.length) {
@@ -15,7 +14,7 @@ export async function loader({}: LoaderArgs) {
   return json({ filters });
 }
 
-export async function meta({}: ActionArgs) {
+export async function meta() {
   return {
     title: "3D Space - Product",
   };
