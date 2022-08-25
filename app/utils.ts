@@ -5,6 +5,10 @@ import type { User } from "~/models/user.server";
 
 const DEFAULT_REDIRECT = "/";
 
+export function isNumeric(value: string) {
+  return /^-?\d+$/.test(value);
+}
+
 /**
  * This should be used any time the redirect path is user-provided
  * (Like the query string on our login/signup pages). This avoids
@@ -72,6 +76,10 @@ export function validateEmail(email: unknown): email is string {
 
 export function validatePhone(phone: unknown): phone is string {
   return (
-    typeof phone === "string" && phone.length === 9 && !phone.includes("+995")
+    typeof phone === "string" &&
+    phone.length === 9 &&
+    isNumeric(phone) &&
+    phone[0] === "5" &&
+    !phone.includes("+995")
   );
 }
