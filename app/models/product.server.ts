@@ -49,24 +49,10 @@ export async function addNewProduct(
     },
   });
 }
-// export async function createUser(
-//   name: User["name"],
-//   lastName: User["lastName"],
-//   phone: User["phone"],
-//   email: User["email"],
-//   password: string
-// ) {
 
-//   return prisma.user.create({
-//     data: {
-//       name,
-//       lastName,
-//       phone,
-//       email,
-//     },
-//   });
-// }
-
-// export async function deleteUserByEmail(email: User["email"]) {
-//   return prisma.user.delete({ where: { email } });
-// }
+export async function getEveryPossibleCategory() {
+  // TODO this needs to be distinct
+  // probably pass column name and filter received data
+  // ! note that categories is an array item
+  return prisma.product.findMany({ select: { categories: true } });
+}

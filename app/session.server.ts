@@ -1,5 +1,7 @@
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import invariant from "tiny-invariant";
+import { URL } from "url";
+import { roleMap } from "~/roleMap";
 
 import type { User } from "~/models/user.server";
 import { getUserById } from "~/models/user.server";
@@ -94,4 +96,32 @@ export async function logout(request: Request) {
       "Set-Cookie": await sessionStorage.destroySession(session),
     },
   });
+}
+
+export async function canAccess(request: Request, special = false) {
+  // if route is special this means that
+  // it's protected and user needs permission to access page
+  if (!special) return true;
+  console.log("Route is special");
+
+  // user needs to be logged in to access special page
+  const user = await getUser(request);
+  if (!user) return false;
+  console.log("User is logged in");
+
+  // "dev" user can access every page
+  if (user.role === "dev") return true;
+  console.log("User isn't dev");
+
+  // user role must be in [roleMap.ts] file
+  const allowedList = roleMap[user.role];
+  if (!allowedList) return false;
+  console.log(`Couldn't find allowed routes for ${user.role}`);
+
+  // requested path needs to be in allowed routes
+  const path = new URL(request.url).pathname.split("/").at(1) || "";
+  if (allowedList.includes(path)) return true;
+  console.log("User isn't allowed to visit this page");
+
+  return false;
 }

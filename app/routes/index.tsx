@@ -4,7 +4,6 @@ export default function Index() {
   return (
     <>
       <SecondaryHeader />
-      <div className="h-screen"></div>
     </>
   );
 }

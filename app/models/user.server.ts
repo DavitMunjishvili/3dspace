@@ -76,3 +76,15 @@ export async function verifyLogin(
 
   return userWithoutPassword;
 }
+
+export async function updateUserRole(id: User["id"], role: string) {
+  const user = await prisma.user.update({
+    data: {
+      role,
+    },
+    where: {
+      id,
+    },
+  });
+  return user;
+}
