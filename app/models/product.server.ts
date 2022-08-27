@@ -54,5 +54,5 @@ export async function getEveryPossibleCategory() {
   // TODO this needs to be distinct
   // probably pass column name and filter received data
   // ! note that categories is an array item
-  return prisma.product.findMany({ select: { categories: true } });
+  return await getFilters();
 }

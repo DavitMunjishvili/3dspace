@@ -15,7 +15,7 @@ function classNames(...classes: string[]) {
 export default function Admin() {
   const pages = ["products", "orders", "users"];
   return (
-    <div className="mx-auto mt-8 w-full max-w-md rounded-xl bg-indigo-50 px-2 py-8 sm:px-8 md:max-w-7xl">
+    <div className="mx-auto mt-8 w-full max-w-7xl rounded-xl bg-indigo-50 py-8 px-8">
       <div className="mb-4 flex space-x-4 rounded-xl bg-indigo-900/50 p-1">
         {pages.map((page) => (
           <NavLink
@@ -23,7 +23,7 @@ export default function Admin() {
             to={page}
             className={({ isActive }) =>
               classNames(
-                "w-full rounded-lg py-2.5 text-center text-sm font-medium capitalize leading-5 text-indigo-700",
+                "w-full rounded-lg py-2.5 text-center text-sm font-medium capitalize leading-5 text-indigo-700 duration-75",
                 "ring-white ring-opacity-60 ring-offset-2 ring-offset-indigo-400 focus:outline-none focus:ring-2",
                 isActive
                   ? "bg-white shadow"

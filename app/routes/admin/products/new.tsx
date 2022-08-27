@@ -1,8 +1,10 @@
-import { Dialog, Listbox } from "@headlessui/react";
-import { Form, useNavigate } from "@remix-run/react";
+import { Dialog } from "@headlessui/react";
+import { Form, useNavigate, useTransition } from "@remix-run/react";
 import { json } from "@remix-run/server-runtime";
 import type { ActionArgs } from "@remix-run/server-runtime";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { MouseEvent } from "react";
+import { addNewProduct } from "~/models/product.server";
 
 // export async function loader() {
 //   const categories = getEveryPossibleCategory();
@@ -15,25 +17,78 @@ export async function action({ request }: ActionArgs) {
   const description = formData.get("description");
   const originalPrice = formData.get("originalPrice");
   const currentPrice = formData.get("currentPrice");
-  // TODO: Not receiving categories CONTINUE HERE
-  const categories = formData.get("categories[]");
-  console.log({ name, description, originalPrice, currentPrice, categories });
+  const categories = formData.get("categories");
+  if (!name || !description || !originalPrice || !categories) return;
+  const response = await addNewProduct(
+    name.toString(),
+    description.toString(),
+    originalPrice.toString(),
+    currentPrice?.toString(),
+    categories.toString().split("|"),
+    false
+  );
+  console.log(await response);
   return json({});
 }
 
 export default function New() {
   const navigate = useNavigate();
+  const formRef = useRef<HTMLFormElement>(null);
+  const transition = useTransition();
+  const isProcessing = transition.state === "submitting";
+  const [selectedCategories, setSelectedCategories] = useState<{
+    [key: string]: boolean;
+  }>({});
+
+  const closeDestination = "/admin/products";
   const categories = ["accessories", "decor", "lighting"];
-  const [selectedCategories, setSelectedCategories] = useState([categories[0]]);
+
+  useEffect(() => {
+    if (!isProcessing) {
+      formRef.current?.reset();
+    }
+  }, [isProcessing]);
+
+  const handleCategoryCheckbox = async (
+    event: MouseEvent<HTMLInputElement>
+  ) => {
+    if (typeof event?.currentTarget?.id !== "string") return;
+    const key = event.currentTarget.id;
+    const value = event.currentTarget.checked;
+    setSelectedCategories((prev) => ({ ...prev, [key]: value }));
+  };
 
   return (
-    <Dialog open={true} onClose={() => navigate(-1)} className="relative z-50">
+    <Dialog
+      open={true}
+      onClose={() => navigate(closeDestination)}
+      className="relative z-50"
+    >
       <div className="fixed inset-0 flex items-center justify-center p-8 backdrop-blur-md backdrop-brightness-50">
-        <Dialog.Panel className="w-full max-w-xl rounded-lg bg-indigo-50 py-4 px-6">
+        <Dialog.Panel className="relative w-full max-w-lg rounded-lg bg-indigo-50 py-4 px-6">
+          <button
+            onClick={() => navigate(closeDestination)}
+            className="absolute top-4 left-4 rounded-md border-0 bg-red-300 p-0.5 text-white duration-150 hover:bg-red-400"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="h-6 w-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
           <Dialog.Title className="text-center text-2xl">
             New Product
           </Dialog.Title>
-          <Form method="post">
+          <Form method="post" ref={formRef}>
             <div>
               <label
                 htmlFor="name"
@@ -43,6 +98,7 @@ export default function New() {
               </label>
               <input
                 required
+                autoFocus={true}
                 type="text"
                 name="name"
                 id="name"
@@ -97,60 +153,35 @@ export default function New() {
               </div>
             </div>
             <div className="relative">
-              <label
-                htmlFor="categories"
-                className="mt-4 block text-sm font-medium text-gray-700"
-              >
+              <p className="mt-4 text-sm font-medium text-gray-700">
                 Categories
-              </label>
-              {/* TODO this needs to be autocomplete with ability to add new category */}
-              <Listbox
-                value={selectedCategories}
-                onChange={setSelectedCategories}
+              </p>
+              <input
+                type="hidden"
                 name="categories"
-                multiple
-              >
-                <Listbox.Button className="relative h-9 w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-indigo-500 sm:text-sm">
-                  <span className="block truncate">
-                    {selectedCategories.join(", ")}
-                  </span>
-                  <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                    👇️
-                  </span>
-                </Listbox.Button>
-                <Listbox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                  {categories.map((category) => (
-                    <Listbox.Option
-                      key={category}
-                      className={({ active }) =>
-                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                          active
-                            ? "bg-indigo-200 text-indigo-900"
-                            : "text-gray-900"
-                        }`
-                      }
-                      value={category}
+                value={Object.keys(selectedCategories)
+                  .filter((value) => (selectedCategories[value] ? true : false))
+                  .join("|")}
+              />
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                {categories.map((category) => (
+                  <div key={category} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id={category}
+                      onClick={handleCategoryCheckbox}
+                      className="h-4 w-4 rounded border-indigo-300 text-indigo-500 duration-150 hover:border-indigo-200 hover:bg-indigo-200 focus:ring-indigo-500"
+                    />
+                    <label
+                      className=" font-light capitalize text-gray-700"
+                      htmlFor={category}
                     >
-                      {({ selected }) => (
-                        <>
-                          <span
-                            className={`block truncate ${
-                              selected ? "font-medium " : "font-normal"
-                            }`}
-                          >
-                            {category}
-                          </span>
-                          {selected ? (
-                            <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                              👍️
-                            </span>
-                          ) : null}
-                        </>
-                      )}
-                    </Listbox.Option>
-                  ))}
-                </Listbox.Options>
-              </Listbox>
+                      {category}
+                    </label>
+                  </div>
+                ))}
+              </div>
+              {/* TODO this needs to be autocomplete with ability to add new category */}
             </div>
             <button
               type="submit"
