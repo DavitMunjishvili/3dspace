@@ -1,6 +1,7 @@
 import { Dialog, Listbox } from "@headlessui/react";
 import { Form, useNavigate } from "@remix-run/react";
-import { ActionArgs, json } from "@remix-run/server-runtime";
+import { json } from "@remix-run/server-runtime";
+import type { ActionArgs } from "@remix-run/server-runtime";
 import { useState } from "react";
 
 // export async function loader() {
