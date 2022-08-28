@@ -1,15 +1,23 @@
 import { Dialog } from "@headlessui/react";
-import { Form, useNavigate, useTransition } from "@remix-run/react";
-import { json } from "@remix-run/server-runtime";
+import {
+  Form,
+  useLoaderData,
+  useNavigate,
+  useTransition,
+} from "@remix-run/react";
+import { redirect } from "@remix-run/server-runtime";
 import type { ActionArgs } from "@remix-run/server-runtime";
 import { useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
-import { addNewProduct } from "~/models/product.server";
+import {
+  addNewProduct,
+  getEveryPossibleCategory,
+} from "~/models/product.server";
 
-// export async function loader() {
-//   const categories = getEveryPossibleCategory();
-//   return categories;
-// }
+export async function loader() {
+  const categories = getEveryPossibleCategory();
+  return categories;
+}
 
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
@@ -27,21 +35,20 @@ export async function action({ request }: ActionArgs) {
     categories.toString().split("|"),
     false
   );
-  console.log(await response);
-  return json({});
+  return redirect("/admin/products");
 }
 
 export default function New() {
+  const closeDestination = "/admin/products";
   const navigate = useNavigate();
-  const formRef = useRef<HTMLFormElement>(null);
   const transition = useTransition();
-  const isProcessing = transition.state === "submitting";
+  const newCategoryRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  let { categories } = useLoaderData<typeof loader>();
   const [selectedCategories, setSelectedCategories] = useState<{
     [key: string]: boolean;
   }>({});
-
-  const closeDestination = "/admin/products";
-  const categories = ["accessories", "decor", "lighting"];
+  const isProcessing = transition.state === "submitting";
 
   useEffect(() => {
     if (!isProcessing) {
@@ -58,6 +65,18 @@ export default function New() {
     setSelectedCategories((prev) => ({ ...prev, [key]: value }));
   };
 
+  const addNewCategory = () => {
+    const newCategory = newCategoryRef.current?.value;
+    if (newCategory && !categories.includes(newCategory.toLowerCase())) {
+      categories.push(newCategory.toLowerCase());
+      setSelectedCategories((prev) => ({
+        ...prev,
+        [newCategory.toLowerCase()]: true,
+      }));
+      newCategoryRef.current.value = "";
+    }
+  };
+
   return (
     <Dialog
       open={true}
@@ -65,7 +84,7 @@ export default function New() {
       className="relative z-50"
     >
       <div className="fixed inset-0 flex items-center justify-center p-8 backdrop-blur-md backdrop-brightness-50">
-        <Dialog.Panel className="relative w-full max-w-lg rounded-lg bg-indigo-50 py-4 px-6">
+        <Dialog.Panel className="relative w-full max-w-lg rounded-xl bg-indigo-50 py-4 px-6">
           <button
             onClick={() => navigate(closeDestination)}
             className="absolute top-4 left-4 rounded-md border-0 bg-red-300 p-0.5 text-white duration-150 hover:bg-red-400"
@@ -163,11 +182,12 @@ export default function New() {
                   .filter((value) => (selectedCategories[value] ? true : false))
                   .join("|")}
               />
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+              <div className="mt-1 grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3">
                 {categories.map((category) => (
                   <div key={category} className="flex items-center gap-2">
                     <input
                       type="checkbox"
+                      defaultChecked={selectedCategories[category]}
                       id={category}
                       onClick={handleCategoryCheckbox}
                       className="h-4 w-4 rounded border-indigo-300 text-indigo-500 duration-150 hover:border-indigo-200 hover:bg-indigo-200 focus:ring-indigo-500"
@@ -180,6 +200,19 @@ export default function New() {
                     </label>
                   </div>
                 ))}
+                <input
+                  type="text"
+                  ref={newCategoryRef}
+                  placeholder="Type New Category"
+                  className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      addNewCategory();
+                    }
+                  }}
+                  onBlur={addNewCategory}
+                />
               </div>
               {/* TODO this needs to be autocomplete with ability to add new category */}
             </div>
