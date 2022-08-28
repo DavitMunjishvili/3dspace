@@ -25,7 +25,7 @@ export default function Products() {
   return (
     <div className="mx-8 mt-8 flex max-w-7xl gap-4 lg:mx-auto">
       {/* Filters */}
-      <div className="w-80 self-start px-4 text-lg font-semibold text-indigo-50">
+      {/* <div className="w-80 self-start px-4 text-lg font-semibold text-indigo-50">
         <p className="text-center">Filters</p>
         <Form method="get" noValidate>
           {Object.keys(filters).map((key) => {
@@ -51,7 +51,7 @@ export default function Products() {
             );
           })}
         </Form>
-      </div>
+      </div> */}
 
       {/* Product */}
       <div className="grid w-full grid-cols-1 gap-4 px-4 md:grid-cols-2 lg:grid-cols-3">
