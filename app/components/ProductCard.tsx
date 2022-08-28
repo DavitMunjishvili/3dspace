@@ -14,7 +14,7 @@ export default function ProductCard({ product }: { product: Product }) {
       />
       <p className="mt-2 text-center text-lg">{product.name}</p>
       <p className="mt-2 text-center text-lg">
-        {product.originalPrice ? (
+        {product.currentPrice ? (
           <>
             {product.currentPrice + "₾"}{" "}
             <span className="text-sm text-red-500 line-through">
