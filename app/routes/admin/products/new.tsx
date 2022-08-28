@@ -145,7 +145,7 @@ export default function New() {
                   htmlFor="originalPrice"
                   className="mt-4 block text-sm font-medium text-gray-700"
                 >
-                  Starting Price
+                  Original Price
                 </label>
                 <input
                   required
