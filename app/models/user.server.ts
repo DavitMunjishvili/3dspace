@@ -1,16 +1,7 @@
-import type { Password, User as DefaultUser } from "@prisma/client";
+import type { Password, User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 import { prisma } from "~/db.server";
-
-type User = DefaultUser & {
-  name: string;
-  lastName: string;
-  phone: string;
-  role: string;
-};
-
-export type { User };
 
 export async function getUserById(id: User["id"]) {
   return prisma.user.findUnique({ where: { id } });
