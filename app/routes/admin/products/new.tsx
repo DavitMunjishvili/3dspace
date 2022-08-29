@@ -31,7 +31,7 @@ export async function action({ request }: ActionArgs) {
     name.toString(),
     description.toString(),
     originalPrice.toString(),
-    currentPrice?.toString(),
+    currentPrice ? currentPrice?.toString() : null,
     categories.toString().split("|"),
     false
   );
