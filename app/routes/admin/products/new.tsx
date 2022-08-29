@@ -27,7 +27,7 @@ export async function action({ request }: ActionArgs) {
   const currentPrice = formData.get("currentPrice");
   const categories = formData.get("categories");
   if (!name || !description || !originalPrice || !categories) return;
-  const response = await addNewProduct(
+  await addNewProduct(
     name.toString(),
     description.toString(),
     originalPrice.toString(),
@@ -35,6 +35,7 @@ export async function action({ request }: ActionArgs) {
     categories.toString().split("|"),
     false
   );
+  // TODO response messages and/or toast
   return redirect("/admin/products");
 }
 
@@ -214,7 +215,6 @@ export default function New() {
                   onBlur={addNewCategory}
                 />
               </div>
-              {/* TODO this needs to be autocomplete with ability to add new category */}
             </div>
             <button
               type="submit"

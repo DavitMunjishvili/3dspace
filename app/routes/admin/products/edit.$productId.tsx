@@ -248,7 +248,6 @@ export default function EditProduct() {
                   onBlur={addNewCategory}
                 />
               </div>
-              {/* TODO this needs to be autocomplete with ability to add new category */}
             </div>
             <button
               type="submit"
