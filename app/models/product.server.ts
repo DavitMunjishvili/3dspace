@@ -1,23 +1,24 @@
+import type { Product } from "@prisma/client";
 import { prisma } from "~/db.server";
-
-export type Product = {
-  id: string;
-  name: string;
-  description: string;
-  originalPrice: string;
-  currentPrice?: string;
-  categories: string[];
-  archive?: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-};
 
 export async function getProductById(id: Product["id"]) {
   return await prisma.product.findUnique({ where: { id } });
 }
 
-export async function getAllProduct() {
-  return await prisma.product.findMany();
+export async function getProducts() {
+  return await prisma.product.findMany({
+    where: { archive: false },
+    select: {
+      id: true,
+      name: true,
+      currentPrice: true,
+      originalPrice: true,
+    },
+  });
+}
+
+export function getAllProduct() {
+  return prisma.product.findMany();
 }
 
 export async function getFilters() {
