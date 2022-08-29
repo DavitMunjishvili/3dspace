@@ -1,16 +1,11 @@
-import type { Product } from "@prisma/client";
 import { useLoaderData } from "@remix-run/react";
-import { redirect } from "@remix-run/server-runtime";
 import ProductCard from "~/components/ProductCard";
-import { getAllProduct, getFilters } from "~/models/product.server";
+import { getFilters, getProducts } from "~/models/product.server";
 
 export async function loader() {
   const filters = await getFilters();
-  const products = await getAllProduct();
-  if (products.length) {
-    return { products, filters };
-  }
-  return redirect("/");
+  const products = await getProducts();
+  return { products, filters };
 }
 
 export async function meta() {
@@ -20,7 +15,7 @@ export async function meta() {
 }
 
 export default function Products() {
-  const { products } = useLoaderData();
+  const { products } = useLoaderData<typeof loader>();
 
   return (
     <div className="mx-8 mt-8 flex max-w-7xl gap-4 lg:mx-auto">
@@ -55,8 +50,8 @@ export default function Products() {
 
       {/* Product */}
       <div className="grid w-full grid-cols-1 gap-4 px-4 md:grid-cols-2 lg:grid-cols-3">
-        {products &&
-          products.map((product: Product) => {
+        {products.length > 0 &&
+          products.map((product) => {
             return <ProductCard key={product.id} product={product} />;
           })}
       </div>
