@@ -1,7 +1,15 @@
-import type { Product } from "@prisma/client";
 import { Link } from "@remix-run/react";
 
-export default function ProductCard({ product }: { product: Product }) {
+export default function ProductCard({
+  product,
+}: {
+  product: {
+    id: string;
+    name: string;
+    currentPrice: string | null;
+    originalPrice: string;
+  };
+}) {
   return (
     <Link
       to={`/product/${product.id}`}
