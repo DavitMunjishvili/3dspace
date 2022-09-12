@@ -7,12 +7,13 @@ import {
 } from "@remix-run/react";
 import { redirect } from "@remix-run/server-runtime";
 import type { ActionArgs } from "@remix-run/server-runtime";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import {
   addNewProduct,
   getEveryPossibleCategory,
 } from "~/models/product.server";
+import { addProductImages } from "~/filesystem.server";
 
 export async function loader() {
   const categories = getEveryPossibleCategory();
@@ -26,30 +27,37 @@ export async function action({ request }: ActionArgs) {
   const originalPrice = formData.get("originalPrice");
   const currentPrice = formData.get("currentPrice");
   const categories = formData.get("categories");
-  if (!name || !description || !originalPrice || !categories) return;
-  await addNewProduct(
+  const images = formData.get("images");
+  if (!name || !description || !originalPrice || !categories) return {};
+  console.log(images);
+  const product = await addNewProduct(
     name.toString(),
     description.toString(),
     originalPrice.toString(),
-    currentPrice ? currentPrice?.toString() : null,
+    currentPrice ? currentPrice.toString() : null,
     categories.toString().split("|"),
     false
   );
+  addProductImages(product.id);
   // TODO response messages and/or toast
   return redirect("/admin/products");
 }
 
 export default function New() {
-  const closeDestination = "/admin/products";
   const navigate = useNavigate();
   const transition = useTransition();
+  const { categories } = useLoaderData<typeof loader>();
+
+  const closeDestination = "/admin/products";
+  const isProcessing = transition.state === "submitting";
+
   const newCategoryRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  let { categories } = useLoaderData<typeof loader>();
+
   const [selectedCategories, setSelectedCategories] = useState<{
     [key: string]: boolean;
   }>({});
-  const isProcessing = transition.state === "submitting";
+  const [productImages, setProductImages] = useState<File[]>([]);
 
   useEffect(() => {
     if (!isProcessing) {
@@ -108,7 +116,45 @@ export default function New() {
           <Dialog.Title className="text-center text-2xl">
             New Product
           </Dialog.Title>
-          <Form method="post" ref={formRef}>
+          <Form method="post" ref={formRef} encType="multipart/form-data">
+            <div>
+              {productImages.length > 0 ? (
+                <div className="mt-4 flex h-32 w-full gap-2 overflow-x-auto rounded-md border border-gray-300 bg-white p-2">
+                  {productImages.map((productImage, idx) => (
+                    <img
+                      key={idx}
+                      className="block h-full rounded-sm border border-gray-200"
+                      src={URL.createObjectURL(productImage)}
+                      alt={productImage.name}
+                    />
+                  ))}
+                  <label
+                    htmlFor="images"
+                    className="flex aspect-square h-full items-center justify-center rounded-sm border-2 border-dashed border-gray-300 bg-gray-100 text-gray-300 duration-150 hover:bg-gray-200 hover:text-gray-400"
+                  >
+                    Add More
+                  </label>
+                </div>
+              ) : (
+                <label
+                  htmlFor="images"
+                  className="mt-4 flex w-full cursor-pointer items-center justify-center rounded-md border border-gray-300 bg-white p-4 text-sm font-medium duration-150 hover:bg-gray-100"
+                >
+                  Add Images
+                </label>
+              )}
+              <input
+                type="file"
+                id="images"
+                multiple
+                onChange={(e) => {
+                  if (!e.target.files) return;
+                  setProductImages([...productImages, ...e.target.files]);
+                }}
+                accept="image/*"
+                className="hidden"
+              />
+            </div>
             <div>
               <label
                 htmlFor="name"

@@ -1,4 +1,4 @@
-import type { Password, User } from "@prisma/client";
+import type { Password, Product, User } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 import { prisma } from "~/db.server";
@@ -78,4 +78,8 @@ export async function updateUserRole(id: User["id"], role: string) {
     },
   });
   return user;
+}
+
+export async function addToCart(userId: User["id"], productId: Product["id"]) {
+  console.log(userId, productId)
 }

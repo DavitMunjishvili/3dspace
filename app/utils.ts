@@ -83,3 +83,40 @@ export function validatePhone(phone: unknown): phone is string {
     !phone.includes("+995")
   );
 }
+
+/**
+ *
+ * @param file pass file or any file
+ * @returns base64 of passed file
+ */
+export async function convertToBase64(
+  file: File
+): Promise<string | ArrayBuffer | null> {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+}
+
+export async function addToLocalCart(productId: string) {
+  const localCart: { [key: string]: number } = JSON.parse(
+    localStorage.getItem("localCart") || "{}"
+  );
+  if (Object.keys(localCart).includes(productId)) localCart[productId] += 1;
+  else localCart[productId] = 1;
+
+  localStorage.setItem("localCart", JSON.stringify(localCart));
+}
+
+export function getLocalCart() {
+  // const localCart: { [key: string]: number } = JSON.parse(
+  //   localStorage.getItem("localCart") || "{}"
+  // );
+  return 7;
+}
