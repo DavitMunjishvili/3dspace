@@ -81,5 +81,5 @@ export async function updateUserRole(id: User["id"], role: string) {
 }
 
 export async function addToCart(userId: User["id"], productId: Product["id"]) {
-  console.log(userId, productId)
+  console.log(userId, productId);
 }
