@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import { Form, Link } from "@remix-run/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useOptionalUser } from "~/utils";
 
 export default function Header() {
