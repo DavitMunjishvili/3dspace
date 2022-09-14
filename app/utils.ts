@@ -1,5 +1,5 @@
 import { useMatches } from "@remix-run/react";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import type { User } from "@prisma/client";
 
@@ -104,19 +104,58 @@ export async function convertToBase64(
   });
 }
 
-export async function addToLocalCart(productId: string) {
-  const localCart: { [key: string]: number } = JSON.parse(
-    localStorage.getItem("localCart") || "{}"
-  );
-  if (Object.keys(localCart).includes(productId)) localCart[productId] += 1;
-  else localCart[productId] = 1;
-
-  localStorage.setItem("localCart", JSON.stringify(localCart));
+export function getLocalCartQuantity() {
+  return 7;
 }
 
-export function getLocalCart() {
-  // const localCart: { [key: string]: number } = JSON.parse(
-  //   localStorage.getItem("localCart") || "{}"
-  // );
-  return 7;
+export type CartType = {
+  [key: string]: { size: string; color: string; quantity: number }[];
+};
+export type CartItemType = {
+  size: string;
+  color: string;
+  quantity: number;
+};
+
+export function useLocalCart() {
+  const [cart, setCart] = useState<CartType>({});
+
+  const handleCartUpdate = (
+    key: string,
+    size: string,
+    color: string,
+    quantity = 1
+  ) => {
+    if (quantity <= 0) return;
+    const localCart = JSON.parse(
+      localStorage.getItem("localCart") || "{}"
+    ) as CartType;
+
+    if (Object.keys(localCart).includes(key)) {
+      const itemsWithThisKey = localCart[key];
+      let exists = false;
+      itemsWithThisKey.forEach((item) => {
+        if (item.color === color && item.size === size) {
+          exists = true;
+          item.quantity += quantity;
+        }
+      });
+      if (!exists) {
+        localCart[key].push({ size, color, quantity });
+      }
+    } else {
+      localCart[key] = [];
+      localCart[key].push({ size, color, quantity });
+    }
+    localStorage.setItem("localCart", JSON.stringify(localCart));
+  };
+
+  useEffect(() => {
+    const localCart = JSON.parse(
+      localStorage.getItem("localCart") || "{}"
+    ) as CartType;
+    setCart(localCart);
+  }, []);
+
+  return { localCart: cart, setLocalCart: handleCartUpdate };
 }
