@@ -1,19 +1,20 @@
 import { Link } from "@remix-run/react";
 import { useEffect, useState } from "react";
+import type { Product } from "@prisma/client";
 
 export default function ProductCard({
   product,
 }: {
   product: {
-    id: string;
-    name: string;
-    currentPrice: string | null;
-    originalPrice: string;
+    id: Product["id"];
+    name: Product["name"];
+    currentPrice: Product["currentPrice"];
+    originalPrice: Product["originalPrice"];
   };
 }) {
   const [image, setImage] = useState<File>();
   useEffect(() => {
-    fetch(`/productImage/${product.id}`)
+    fetch(`/products/${product.id}/image`)
       .then((response) => {
         if (response.ok) return response.json();
         throw response.statusText;
@@ -24,7 +25,7 @@ export default function ProductCard({
 
   return (
     <Link
-      to={`/product/${product.id}`}
+      to={`/products/${product.id}`}
       className="group relative isolation-auto rounded-xl p-4 text-indigo-50 duration-150 hover:scale-105 hover:bg-indigo-50 hover:text-indigo-900"
     >
       <img
