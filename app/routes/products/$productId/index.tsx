@@ -7,11 +7,10 @@ import { getProductById } from "~/models/product.server";
 import { RadioGroup } from "@headlessui/react";
 import { useState } from "react";
 import { getProductThumbnail } from "~/filesystem.server";
-import { useLocalCart, useOptionalUser } from "~/utils";
+import { generateProductColor, useLocalCart, useOptionalUser } from "~/utils";
 
 export async function loader({ params }: LoaderArgs) {
   if (!params || !params?.productId) {
-    console.log(params);
     return redirect("/products");
   }
   try {
@@ -24,7 +23,7 @@ export async function loader({ params }: LoaderArgs) {
     // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
     if (productImages.error) {
-      console.log(productImages.error);
+      console.error(productImages.error);
       return redirect("/products");
     }
     return json({
@@ -48,28 +47,13 @@ export default function ProductPage() {
     useState<typeof availableColors[number]>("Black");
   const user = useOptionalUser();
   const { setLocalCart } = useLocalCart();
-  const generateProductColor = (color: string) => {
-    switch (color) {
-      case "Yellow":
-        return "bg-yellow-500";
-      case "Red":
-        return "bg-red-500";
-      case "Green":
-        return "bg-green-500";
-      case "Black":
-        return "bg-black";
-    }
-  };
 
   const addToCart = () => {
-    console.log({ selectedColor }, { selectedSize });
     if (user) {
-      console.log("Adding To User's Cart...");
       fetch(
         `/cart/add/${product.id}?size=${selectedSize}&color=${selectedColor}`
       ).then((response) => console.log(response));
     } else {
-      console.log("Adding To LocalStorage Cart...");
       setLocalCart(product.id, selectedSize, selectedColor);
     }
   };

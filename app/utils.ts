@@ -1,7 +1,7 @@
 import { useMatches } from "@remix-run/react";
 import { useEffect, useMemo, useState } from "react";
 
-import type { User } from "@prisma/client";
+import type { Product, User } from "@prisma/client";
 
 const DEFAULT_REDIRECT = "/";
 
@@ -158,4 +158,23 @@ export function useLocalCart() {
   }, []);
 
   return { localCart: cart, setLocalCart: handleCartUpdate };
+}
+
+export function generateProductColor(color: string) {
+  switch (color) {
+    case "Yellow":
+      return "bg-yellow-500";
+    case "Red":
+      return "bg-red-500";
+    case "Green":
+      return "bg-green-500";
+    case "Black":
+      return "bg-black";
+  }
+}
+
+export async function fetchProductDetails(productId: string) {
+  const response = await fetch(`/products/${productId}/details`);
+  const data = (await response.json()) as Product;
+  return data;
 }

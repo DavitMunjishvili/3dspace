@@ -7,7 +7,7 @@ import {
 } from "@remix-run/react";
 import { redirect } from "@remix-run/server-runtime";
 import type { ActionArgs } from "@remix-run/server-runtime";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import {
   addNewProduct,
@@ -28,8 +28,8 @@ export async function action({ request }: ActionArgs) {
   const currentPrice = formData.get("currentPrice");
   const categories = formData.get("categories");
   const images = formData.get("images");
+  // TODO SAVE IMAGES
   if (!name || !description || !originalPrice || !categories) return {};
-  console.log(images);
   const product = await addNewProduct(
     name.toString(),
     description.toString(),
