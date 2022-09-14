@@ -5,7 +5,9 @@ Admin:
   ☐ Ordering managment system
   
 Customer:
-  ☐ Cart system (user)
+  ✔ Cart system (user) @done(22-09-14 19:19)
+  ☐ Adding Element Toast
+  ☐ Editing Quantity On Cart Page
 
   Landing Page:
     ☐ Basic layout according to design
