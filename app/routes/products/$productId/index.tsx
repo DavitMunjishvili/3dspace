@@ -7,7 +7,7 @@ import { getProductById } from "~/models/product.server";
 import { RadioGroup } from "@headlessui/react";
 import { useState } from "react";
 import { getProductThumbnail } from "~/filesystem.server";
-import { addToLocalCart, useOptionalUser } from "~/utils";
+import { useLocalCart, useOptionalUser } from "~/utils";
 
 export async function loader({ params }: LoaderArgs) {
   if (!params || !params?.productId) {
@@ -47,7 +47,7 @@ export default function ProductPage() {
   const [selectedColor, setSelectedColor] =
     useState<typeof availableColors[number]>("Black");
   const user = useOptionalUser();
-
+  const { setLocalCart } = useLocalCart();
   const generateProductColor = (color: string) => {
     switch (color) {
       case "Yellow":
@@ -62,14 +62,15 @@ export default function ProductPage() {
   };
 
   const addToCart = () => {
+    console.log({ selectedColor }, { selectedSize });
     if (user) {
       console.log("Adding To User's Cart...");
-      fetch(`/cart/add/${product.id}`).then((response) =>
-        console.log(response)
-      );
+      fetch(
+        `/cart/add/${product.id}?size=${selectedSize}&color=${selectedColor}`
+      ).then((response) => console.log(response));
     } else {
       console.log("Adding To LocalStorage Cart...");
-      addToLocalCart(product.id);
+      setLocalCart(product.id, selectedSize, selectedColor);
     }
   };
   return (
