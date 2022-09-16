@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import type { Product } from "@prisma/client";
-import { CartItemType, generateProductColor } from "~/utils";
+import { generateProductColor } from "~/utils";
+import type { CartItemType } from "~/utils";
+
 import CirclingLoader from "./Loaders/Circling";
 import { Link } from "@remix-run/react";
 
