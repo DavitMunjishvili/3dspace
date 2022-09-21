@@ -1,5 +1,5 @@
 import { json, redirect } from "@remix-run/server-runtime";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useNavigate } from "@remix-run/react";
 
 import type { LoaderArgs } from "@remix-run/server-runtime";
 
@@ -7,7 +7,7 @@ import { getProductById } from "~/models/product.server";
 import { RadioGroup } from "@headlessui/react";
 import { useState } from "react";
 import { getProductThumbnail } from "~/filesystem.server";
-import { generateProductColor, useLocalCart, useOptionalUser } from "~/utils";
+import { generateProductColor, useOptionalUser } from "~/utils";
 
 export async function loader({ params }: LoaderArgs) {
   if (!params || !params?.productId) {
@@ -46,7 +46,7 @@ export default function ProductPage() {
   const [selectedColor, setSelectedColor] =
     useState<typeof availableColors[number]>("Black");
   const user = useOptionalUser();
-  const { setLocalCart } = useLocalCart();
+  const navigate = useNavigate();
 
   const addToCart = () => {
     if (user) {
@@ -54,9 +54,10 @@ export default function ProductPage() {
         `/cart/add/${product.id}?size=${selectedSize}&color=${selectedColor}`
       ).then((response) => console.log(response));
     } else {
-      setLocalCart(product.id, selectedSize, selectedColor);
+      navigate("/login");
     }
   };
+
   return (
     <main className="min-h-screen bg-indigo-50">
       <div className="mx-auto grid max-w-7xl gap-8 px-6 pt-8 sm:grid-cols-2 sm:px-4">
