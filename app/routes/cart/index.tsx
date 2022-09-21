@@ -14,7 +14,7 @@ export async function loader({ request }: LoaderArgs) {
   if (cart.length)
     cart.map(async (item) => {
       const image = getProductThumbnail(item.productId);
-      item.image = image?.image;
+      item.image = image.image ? image.image : "";
       return item;
     });
   return json(cart);
