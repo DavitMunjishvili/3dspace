@@ -2,7 +2,7 @@ import type { Product } from "@prisma/client";
 import { prisma } from "~/db.server";
 
 export async function getProductById(id: Product["id"]) {
-  return await prisma.product.findUniqueOrThrow({ where: { id } });
+  return await prisma.product.findUnique({ where: { id } });
 }
 
 export async function getProducts() {

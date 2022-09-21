@@ -13,29 +13,26 @@ export async function loader({ params }: LoaderArgs) {
   if (!params || !params?.productId) {
     return redirect("/products");
   }
-  try {
-    const productInfo = await getProductById(params.productId);
-    const productImages = getProductThumbnail(params.productId);
+  const productInfo = await getProductById(params.productId);
+  if (!productInfo) return redirect("/products");
+  const productImages = getProductThumbnail(params.productId);
 
-    // GUIDE If you want to get all images use this code snippet:
-    // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    // const productImages = getProductImages(params.productId);
-    // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+  // GUIDE If you want to get all images use this code snippet:
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  // const productImages = getProductImages(params.productId);
+  // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-    if (productImages.error) {
-      console.error(productImages.error);
-      return redirect("/products");
-    }
-    return json({
-      // images: productImages.images,
-      images: [productImages.image],
-      product: productInfo,
-      availableSizes: ["Small", "Medium", "Large"] as const,
-      availableColors: ["Yellow", "Red", "Green", "Black"] as const,
-    });
-  } catch (e) {
+  if (productImages.error) {
+    console.error(productImages.error);
     return redirect("/products");
   }
+  return json({
+    // images: productImages.images,
+    images: [productImages.image],
+    product: productInfo,
+    availableSizes: ["Small", "Medium", "Large"] as const,
+    availableColors: ["Yellow", "Red", "Green", "Black"] as const,
+  });
 }
 
 export default function ProductPage() {
