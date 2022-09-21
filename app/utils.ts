@@ -1,5 +1,5 @@
 import { useMatches } from "@remix-run/react";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import type { Product, User } from "@prisma/client";
 
