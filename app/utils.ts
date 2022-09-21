@@ -109,56 +109,53 @@ export function getLocalCartQuantity() {
 }
 
 export type CartType = {
-  [key: string]: { size: string; color: string; quantity: number }[];
-};
-export type CartItemType = {
+  productId: string;
   size: string;
   color: string;
   quantity: number;
-};
+}[];
+// export function useLocalCart() {
+//   const [cart, setCart] = useState<CartType>({});
 
-export function useLocalCart() {
-  const [cart, setCart] = useState<CartType>({});
+//   const handleCartUpdate = (
+//     key: string,
+//     size: string,
+//     color: string,
+//     quantity = 1
+//   ) => {
+//     if (quantity <= 0) return;
+//     const localCart = JSON.parse(
+//       localStorage.getItem("localCart") || "{}"
+//     ) as CartType;
 
-  const handleCartUpdate = (
-    key: string,
-    size: string,
-    color: string,
-    quantity = 1
-  ) => {
-    if (quantity <= 0) return;
-    const localCart = JSON.parse(
-      localStorage.getItem("localCart") || "{}"
-    ) as CartType;
+//     if (Object.keys(localCart).includes(key)) {
+//       const itemsWithThisKey = localCart[key];
+//       let exists = false;
+//       itemsWithThisKey.forEach((item) => {
+//         if (item.color === color && item.size === size) {
+//           exists = true;
+//           item.quantity += quantity;
+//         }
+//       });
+//       if (!exists) {
+//         localCart[key].push({ size, color, quantity });
+//       }
+//     } else {
+//       localCart[key] = [];
+//       localCart[key].push({ size, color, quantity });
+//     }
+//     localStorage.setItem("localCart", JSON.stringify(localCart));
+//   };
 
-    if (Object.keys(localCart).includes(key)) {
-      const itemsWithThisKey = localCart[key];
-      let exists = false;
-      itemsWithThisKey.forEach((item) => {
-        if (item.color === color && item.size === size) {
-          exists = true;
-          item.quantity += quantity;
-        }
-      });
-      if (!exists) {
-        localCart[key].push({ size, color, quantity });
-      }
-    } else {
-      localCart[key] = [];
-      localCart[key].push({ size, color, quantity });
-    }
-    localStorage.setItem("localCart", JSON.stringify(localCart));
-  };
+//   useEffect(() => {
+//     const localCart = JSON.parse(
+//       localStorage.getItem("localCart") || "{}"
+//     ) as CartType;
+//     setCart(localCart);
+//   }, []);
 
-  useEffect(() => {
-    const localCart = JSON.parse(
-      localStorage.getItem("localCart") || "{}"
-    ) as CartType;
-    setCart(localCart);
-  }, []);
-
-  return { localCart: cart, setLocalCart: handleCartUpdate };
-}
+//   return { localCart: cart, setLocalCart: handleCartUpdate };
+// }
 
 export function generateProductColor(color: string) {
   switch (color) {
