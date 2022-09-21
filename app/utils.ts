@@ -113,10 +113,10 @@ export type CartType = {
   size: string;
   color: string;
   quantity: number;
-  name: string;
-  image: string;
-  originalPrice: string;
-  currentPrice: string;
+  name: Product["name"];
+  image?: string;
+  originalPrice: Product["originalPrice"];
+  currentPrice: Product["currentPrice"];
 }[];
 // export function useLocalCart() {
 //   const [cart, setCart] = useState<CartType>({});

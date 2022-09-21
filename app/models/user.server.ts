@@ -84,11 +84,12 @@ export async function updateUserRole(id: User["id"], role: string) {
 
 export async function addToCart(
   userId: User["id"],
-  {
-    productId,
-    size,
-    color,
-  }: { productId: Product["id"]; size: string; color: string }
+  productId: Product["id"],
+  name: Product["name"],
+  originalPrice: Product["originalPrice"],
+  currentPrice: Product["currentPrice"],
+  color: string,
+  size: string
 ) {
   // Check if user exists
   const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -105,7 +106,17 @@ export async function addToCart(
         id: user.id,
       },
       data: {
-        cart: JSON.stringify([{ productId, size, color, quantity: 1 }]),
+        cart: JSON.stringify([
+          {
+            productId,
+            name,
+            originalPrice,
+            currentPrice,
+            size,
+            color,
+            quantity: 1,
+          } as CartType[0],
+        ]),
       },
     });
   } else {
@@ -122,7 +133,16 @@ export async function addToCart(
       }
       return item;
     });
-    if (!found) cart.push({ productId, size, color, quantity: 1 });
+    if (!found)
+      cart.push({
+        productId,
+        name,
+        originalPrice,
+        currentPrice,
+        size,
+        color,
+        quantity: 1,
+      });
     await prisma.user.update({
       where: {
         id: user.id,

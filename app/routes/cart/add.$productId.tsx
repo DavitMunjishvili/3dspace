@@ -34,7 +34,15 @@ export async function loader({ params, request }: LoaderArgs) {
       statusText: "missing size and color params",
     });
 
-  addToCart(userId, { productId: product.id, size, color });
+  await addToCart(
+    userId,
+    product.id,
+    product.name,
+    product.originalPrice,
+    product.currentPrice,
+    color,
+    size
+  );
   return json("successfully added to cart", {
     status: 200,
     statusText: "successfully added to cart",
