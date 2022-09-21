@@ -13,6 +13,7 @@ import {
   Scripts,
   ScrollRestoration,
   useCatch,
+  useNavigate,
 } from "@remix-run/react";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
@@ -63,6 +64,8 @@ export default function App() {
 
 export function CatchBoundary() {
   const caught = useCatch();
+  const navigate = useNavigate();
+
   return (
     <html>
       <head>
@@ -81,12 +84,20 @@ export function CatchBoundary() {
               which means page was{" "}
               <span className="font-bold">{caught.statusText}</span>
             </h2>
-            <Link
-              to="/"
-              className="mt-4 block rounded-xl bg-indigo-500 py-2 text-center text-indigo-50 shadow-xl duration-150 hover:bg-indigo-600"
-            >
-              Go To Home
-            </Link>
+            <div className="flex gap-2">
+              <button
+                onClick={() => navigate(-1)}
+                className="mt-4 block w-full rounded-xl bg-indigo-500 py-2 text-center text-indigo-50 shadow-xl duration-150 hover:bg-indigo-600"
+              >
+                Go Back
+              </button>
+              <Link
+                to="/"
+                className="mt-4 block w-full rounded-xl bg-indigo-500 py-2 text-center text-indigo-50 shadow-xl duration-150 hover:bg-indigo-600"
+              >
+                Go To Home
+              </Link>
+            </div>
           </div>
         </div>
         <Scripts />

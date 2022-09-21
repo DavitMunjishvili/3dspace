@@ -1,22 +1,36 @@
 import { Link } from "@remix-run/react";
+import { useEffect, useState } from "react";
+import type { Product } from "@prisma/client";
 
 export default function ProductCard({
   product,
 }: {
   product: {
-    id: string;
-    name: string;
-    currentPrice: string | null;
-    originalPrice: string;
+    id: Product["id"];
+    name: Product["name"];
+    currentPrice: Product["currentPrice"];
+    originalPrice: Product["originalPrice"];
   };
 }) {
+  const [image, setImage] = useState<File>();
+  useEffect(() => {
+    fetch(`/products/${product.id}/image`)
+      .then((response) => {
+        if (response.ok) return response.json();
+        throw response.statusText;
+      })
+      .then((data) => setImage(data))
+      .catch((error) => console.error("ERROR", error));
+  }, [product.id]);
+
   return (
     <Link
-      to={`/product/${product.id}`}
+      to={`/products/${product.id}`}
       className="group relative isolation-auto rounded-xl p-4 text-indigo-50 duration-150 hover:scale-105 hover:bg-indigo-50 hover:text-indigo-900"
     >
       <img
-        src={`https://picsum.photos/seed/${product.name}/200/500`}
+        src={`data:image/jpeg;base64,${image}`}
+        // src={`https://picsum.photos/seed/${product.name}/200/500`}
         className="relative -z-10 aspect-square w-full rounded-lg object-cover"
         alt={product.name}
       />

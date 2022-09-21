@@ -8,12 +8,13 @@ generator client {
 }
 
 model User {
-  id       String @id @default(cuid())
+  id       String   @id @default(cuid())
   name     String
   lastName String
-  phone    String @unique
-  email    String @unique
-  role     String @default("customer")
+  phone    String   @unique
+  email    String   @unique
+  role     String   @default("customer")
+  cart     String   @default("")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
