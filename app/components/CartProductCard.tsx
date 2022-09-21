@@ -1,17 +1,21 @@
+import { Link } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import type { Product } from "@prisma/client";
-import { generateProductColor } from "~/utils";
-import type { CartItemType } from "~/utils";
 
+import { generateProductColor } from "~/utils";
 import CirclingLoader from "./Loaders/Circling";
-import { Link } from "@remix-run/react";
+import type { CartType } from "~/utils";
 
 export default function CartProductCard({
   id,
-  itemDetails,
+  size,
+  color,
+  quantity,
 }: {
   id: Product["id"];
-  itemDetails: CartItemType;
+  size: CartType[0]["size"];
+  color: CartType[0]["color"];
+  quantity: CartType[0]["quantity"];
 }) {
   const [image, setImage] = useState<File>();
   const [details, setDetails] = useState<Product>();
@@ -54,7 +58,7 @@ export default function CartProductCard({
               <p>Quantity:</p>
               <select
                 disabled
-                value={itemDetails.quantity}
+                value={quantity}
                 name="quantity"
                 id="quantity"
                 className="appearance-none rounded-lg border bg-transparent px-4 py-1 focus:border-indigo-500 focus:ring-indigo-500"
@@ -70,14 +74,14 @@ export default function CartProductCard({
               Color:
               <div
                 className={`aspect-square w-6 cursor-pointer rounded-full shadow-md ${generateProductColor(
-                  itemDetails.color
+                  color
                 )} `}
               ></div>
             </div>
             <div className="flex items-center gap-2">
               Size:
               <div className="flex cursor-pointer rounded-lg border border-indigo-900 bg-indigo-500 px-2 py-1 text-indigo-50 shadow-md">
-                {itemDetails.size}
+                {size}
               </div>
             </div>
           </div>

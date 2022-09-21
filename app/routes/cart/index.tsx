@@ -23,11 +23,9 @@ export default function Cart() {
             <CartProductCard
               key={item.productId + item.color + item.size}
               id={item.productId}
-              itemDetails={{
-                color: item.color,
-                size: item.size,
-                quantity: item.quantity,
-              }}
+              size={item.size}
+              color={item.color}
+              quantity={item.quantity}
             />
           ))}
         </div>
