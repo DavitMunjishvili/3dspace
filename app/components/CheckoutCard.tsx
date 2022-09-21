@@ -1,45 +1,38 @@
-import { useEffect, useState } from "react";
-import { fetchProductDetails } from "~/utils";
-import type { Product } from "@prisma/client";
+import { useMemo, useState } from "react";
 
-export default function CheckoutCard({
-  checkoutCardData,
-}: {
-  checkoutCardData: { [key: string]: number };
-}) {
-  const [products, setProducts] = useState<Product[]>([]);
+import type { CartType } from "~/utils";
+
+export default function CheckoutCard({ cart }: { cart: CartType }) {
   const [subtotal, setSubtotal] = useState(0);
 
-  useEffect(() => {
-    Object.keys(checkoutCardData).map(async (productId) => {
-      const product = await fetchProductDetails(productId);
-      setSubtotal(
-        (prev) =>
-          prev +
-          Number(product.currentPrice || product.originalPrice) *
-            checkoutCardData[product.id]
-      );
-      return setProducts((prev) => [...prev, product]);
-    });
-  }, [checkoutCardData]);
+  useMemo(() => {
+    const total = cart.reduce(
+      (accumulator, product) =>
+        accumulator +
+        Number(product.currentPrice || product.originalPrice) *
+          product.quantity,
+      0
+    );
+    setSubtotal(total);
+  }, [cart]);
 
   return (
     <div>
       <div className="border-b border-b-neutral-500 p-2">
-        {products.map((product) => (
-          <div key={product.id} className="flex justify-between">
+        {cart.map((product) => (
+          <div
+            key={product.productId + product.size + product.color}
+            className="flex justify-between"
+          >
             <p>
               {product.name}
               <span className="text-sm font-light text-neutral-500">
-                (x{checkoutCardData[product.id]})
+                (x{product.quantity})
               </span>
             </p>
             <p>
-              {Number(
-                product.currentPrice
-                  ? product.currentPrice
-                  : product.originalPrice
-              ) * checkoutCardData[product.id]}
+              {Number(product.currentPrice || product.originalPrice) *
+                product.quantity}
             </p>
           </div>
         ))}
