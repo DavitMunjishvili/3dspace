@@ -17,9 +17,32 @@ export async function getProducts() {
   });
 }
 
+export async function getProductsSearch(search: string) {
+  return await prisma.product.findMany({
+    where: {
+      AND: [
+        { archive: false },
+        {
+          OR: [
+            { name: { contains: search, mode: "insensitive" } },
+            { description: { contains: search, mode: "insensitive" } },
+            { categories: { has: search } },
+          ],
+        },
+      ],
+    },
+    select: {
+      id: true,
+      name: true,
+      currentPrice: true,
+      originalPrice: true,
+    },
+  });
+}
+
 export async function getProductsOnSale() {
   return await prisma.product.findMany({
-    where: { archive: false, currentPrice: {not: null} },
+    where: { archive: false, currentPrice: { not: null } },
     select: {
       id: true,
       name: true,
