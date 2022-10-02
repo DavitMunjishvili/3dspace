@@ -1,7 +1,7 @@
 Admin:
   ☐ Adding pictures to product \ maybe 3D models
   ☐ User managment page
-  ☐ Admin link to the header so it will easier to navige for admin users
+  ✔ Admin link to the header so it will easier to navige for admin users @done(22-09-26 14:46)
   ☐ Ordering managment system
   
 Customer:
@@ -14,5 +14,5 @@ Customer:
 
   Product Page:
     ☐ Working Filters
-    ☐ Item Page
+    ✔ Item Page @done(22-09-26 14:46)
     ☐ Pagination
