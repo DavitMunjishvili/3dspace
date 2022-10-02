@@ -15,7 +15,7 @@ export async function loader({ params }: LoaderArgs) {
   }
   const productInfo = await getProductById(Number(params.productId));
   if (!productInfo) return redirect("/products");
-  const productImages = getProductThumbnail(params.productId);
+  const productImages = getProductThumbnail(Number(params.productId));
 
   // GUIDE If you want to get all images use this code snippet:
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

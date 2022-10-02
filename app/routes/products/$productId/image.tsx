@@ -4,7 +4,7 @@ import { getProductThumbnail } from "~/filesystem.server";
 
 export async function loader({ params }: LoaderArgs) {
   if (!params?.productId) return;
-  const response = getProductThumbnail(params.productId);
+  const response = getProductThumbnail(Number(params.productId));
   if (response?.error) {
     return json(response.error, { status: 400 });
   }
