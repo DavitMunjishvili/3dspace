@@ -13,7 +13,6 @@ import {
   addNewProduct,
   getEveryPossibleCategory,
 } from "~/models/product.server";
-import { addProductImages } from "~/filesystem.server";
 
 export async function loader() {
   const categories = getEveryPossibleCategory();
@@ -29,7 +28,11 @@ export async function action({ request }: ActionArgs) {
   const categories = formData.get("categories");
   const images = formData.get("images");
   // TODO SAVE IMAGES
-  if (!name || !description || !originalPrice || !categories) return {};
+  if (!name || !description || !originalPrice || !categories)
+    return {
+      error:
+        "Display Name, Product Description, Original Price and at least one Category is required",
+    };
   const product = await addNewProduct(
     name.toString(),
     description.toString(),
@@ -38,7 +41,6 @@ export async function action({ request }: ActionArgs) {
     categories.toString().split("|"),
     false
   );
-  addProductImages(product.id);
   // TODO response messages and/or toast
   return redirect("/admin/products");
 }
@@ -62,6 +64,7 @@ export default function New() {
   useEffect(() => {
     if (!isProcessing) {
       formRef.current?.reset();
+      setProductImages([])
     }
   }, [isProcessing]);
 
@@ -130,9 +133,9 @@ export default function New() {
                   ))}
                   <label
                     htmlFor="images"
-                    className="flex aspect-square h-full items-center justify-center rounded-sm border-2 border-dashed border-gray-300 bg-gray-100 text-gray-300 duration-150 hover:bg-gray-200 hover:text-gray-400"
+                    className="flex aspect-square h-full items-center justify-center rounded-sm border-2 border-dashed border-gray-300 bg-gray-100 text-center text-gray-300 duration-150 hover:bg-gray-200 hover:text-gray-400"
                   >
-                    Add More
+                    Change Images
                   </label>
                 </div>
               ) : (
@@ -146,10 +149,11 @@ export default function New() {
               <input
                 type="file"
                 id="images"
+                name="images"
                 multiple
                 onChange={(e) => {
                   if (!e.target.files) return;
-                  setProductImages([...productImages, ...e.target.files]);
+                  setProductImages([...e.target.files]);
                 }}
                 accept="image/*"
                 className="hidden"
