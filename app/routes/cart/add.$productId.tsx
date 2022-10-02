@@ -17,7 +17,7 @@ export async function loader({ params, request }: LoaderArgs) {
     });
 
   // Check if product exists
-  const product = await getProductById(params.productId);
+  const product = await getProductById(Number(params.productId));
   if (!product)
     return json("couldn't find product with that id", {
       status: 404,

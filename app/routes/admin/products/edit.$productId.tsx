@@ -12,7 +12,7 @@ import {
 
 export async function loader({ params }: LoaderArgs) {
   if (!params?.productId) return;
-  const product = await getProductById(params.productId);
+  const product = await getProductById(Number(params.productId));
   const categories = await getEveryPossibleCategory();
   return { categories, product };
 }
@@ -29,7 +29,7 @@ export async function action({ request }: ActionArgs) {
 
   if (!id || !name || !description || !originalPrice || !categories) return {};
   const response = await updateProduct(
-    id.toString(),
+    Number(id.toString()),
     name.toString(),
     description.toString(),
     originalPrice.toString(),

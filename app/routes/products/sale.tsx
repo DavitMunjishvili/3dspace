@@ -1,20 +1,10 @@
 import { useLoaderData } from "@remix-run/react";
-import type { LoaderArgs } from "@remix-run/server-runtime";
 import ProductCard from "~/components/ProductCard";
-import {
-  getFilters,
-  getProducts,
-  getProductsSearch,
-} from "~/models/product.server";
+import { getFilters, getProductsOnSale } from "~/models/product.server";
 
-export async function loader({ request }: LoaderArgs) {
-  let products = await getProducts();
-
-  const url = new URL(request.url);
-  const search = url.searchParams.get("search");
-  if (search) products = await getProductsSearch(search);
-
+export async function loader() {
   const filters = await getFilters();
+  const products = await getProductsOnSale();
   return { products, filters };
 }
 

@@ -109,7 +109,7 @@ export function getLocalCartQuantity() {
 }
 
 export type CartType = {
-  productId: string;
+  productId: Product["id"];
   size: string;
   color: string;
   quantity: number;

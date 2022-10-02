@@ -1,4 +1,5 @@
 import fs from "fs";
+import type { Product } from "@prisma/client";
 
 export function addProductImages(id: string, images?: string[]) {
   const dir = `app/assets/productImages/${id}`;
@@ -28,7 +29,7 @@ export function getProductImages(id: string) {
   }
 }
 
-export function getProductThumbnail(id: string) {
+export function getProductThumbnail(id: Product["id"]) {
   const dir = `app/assets/productImages/${id}`;
   if (fs.existsSync(dir)) {
     const files = fs.readdirSync(dir);

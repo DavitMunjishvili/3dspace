@@ -54,10 +54,18 @@ export default function Header() {
                   d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                 />
               </svg>
-              <input
-                type="text"
-                className="border-none bg-transparent p-0 focus:border-none focus:outline-none focus:ring-0 lg:w-96"
-              />
+              <Form method="get" action="/products">
+                <label htmlFor="search" className="sr-only">
+                  Search for product
+                </label>
+                <input
+                  id="search"
+                  name="search"
+                  type="text"
+                  placeholder="Search for products..."
+                  className="border-none bg-transparent p-0 focus:border-none focus:outline-none focus:ring-0 lg:w-96"
+                />
+              </Form>
             </div>
           </div>
 
