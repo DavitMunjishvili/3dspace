@@ -5,7 +5,7 @@ import invariant from "tiny-invariant";
 
 export async function loader({ params }: LoaderArgs) {
   invariant(params.productId, "ProductID is required");
-  const response = await getProductById(params.productId);
+  const response = await getProductById(Number(params.productId));
 
   if (response) return json(response);
   return json("couldn't find product with this id", {

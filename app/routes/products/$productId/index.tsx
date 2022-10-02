@@ -13,7 +13,7 @@ export async function loader({ params }: LoaderArgs) {
   if (!params || !params?.productId) {
     return redirect("/products");
   }
-  const productInfo = await getProductById(params.productId);
+  const productInfo = await getProductById(Number(params.productId));
   if (!productInfo) return redirect("/products");
   const productImages = getProductThumbnail(params.productId);
 
