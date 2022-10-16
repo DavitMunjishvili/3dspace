@@ -49,8 +49,5 @@ export async function getProductThumbnail(id: Product["id"]) {
     .from("product.images")
     .getPublicUrl(`${id}/${list.data[0].name}`);
 
-  if (image.error || !image.publicURL)
-    return { error: "Couldn't get image publicURL", publicURL: undefined };
-
-  return { error: undefined, publicURL: image.publicURL };
+  return { error: undefined, publicURL: image.data.publicUrl };
 }
