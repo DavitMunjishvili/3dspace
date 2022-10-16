@@ -15,20 +15,20 @@ export async function loader({ params }: LoaderArgs) {
   }
   const productInfo = await getProductById(Number(params.productId));
   if (!productInfo) return redirect("/products");
-  const productImages = getProductThumbnail(Number(params.productId));
+  const productImages = await getProductThumbnail(Number(params.productId));
 
   // GUIDE If you want to get all images use this code snippet:
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // const productImages = getProductImages(params.productId);
   // = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 
-  if (productImages.error) {
+  if (productImages.error || !productImages.publicURL) {
     console.error(productImages.error);
     return redirect("/products");
   }
   return json({
     // images: productImages.images,
-    images: [productImages.image],
+    images: [productImages.publicURL],
     product: productInfo,
     availableSizes: ["Small", "Medium", "Large"] as const,
     availableColors: ["Yellow", "Red", "Green", "Black"] as const,
@@ -64,7 +64,7 @@ export default function ProductPage() {
             images.map((image, idx) => (
               <img
                 key={idx}
-                src={`data:image/jpeg;base64,${image}`}
+                src={image}
                 className="aspect-square w-full rounded-lg object-cover"
                 alt={product.name}
               />
