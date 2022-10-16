@@ -121,6 +121,7 @@ jobs:
           wait-on: "http://localhost:8811"
         env:
           PORT: "8811"
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
 
   build:
     name: 🐳 Build
