@@ -1,6 +1,7 @@
 import { Link } from "@remix-run/react";
 import { useEffect, useState } from "react";
 import type { Product } from "@prisma/client";
+import CirclingLoader from "./Loaders/Circling";
 
 export default function ProductCard({
   product,
@@ -12,14 +13,19 @@ export default function ProductCard({
     originalPrice: Product["originalPrice"];
   };
 }) {
-  const [image, setImage] = useState<File>();
+  const [image, setImage] = useState<string>();
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
+    setLoading(true);
     fetch(`/products/${product.id}/image`)
       .then((response) => {
         if (response.ok) return response.json();
         throw response.statusText;
       })
-      .then((data) => setImage(data))
+      .then((data) => {
+        setLoading(false);
+        setImage(data);
+      })
       .catch((error) => console.error("ERROR", error));
   }, [product.id]);
 
@@ -28,12 +34,17 @@ export default function ProductCard({
       to={`/products/${product.id}`}
       className="group relative isolation-auto rounded-xl p-4 text-indigo-50 duration-150 hover:scale-105 hover:bg-indigo-50 hover:text-indigo-900"
     >
-      <img
-        src={`data:image/jpeg;base64,${image}`}
-        // src={`https://picsum.photos/seed/${product.name}/200/500`}
-        className="relative -z-10 aspect-square w-full rounded-lg object-cover"
-        alt={product.name}
-      />
+      {loading ? (
+        <div className="relative -z-10 flex aspect-square w-full items-center justify-center rounded-lg">
+          <CirclingLoader />
+        </div>
+      ) : (
+        <img
+          src={image}
+          className="relative -z-10 aspect-square w-full rounded-lg object-cover"
+          alt={product.name}
+        />
+      )}
       <p className="mt-2 text-center text-lg">{product.name}</p>
       <p className="mt-2 text-center text-lg">
         {product.currentPrice ? (

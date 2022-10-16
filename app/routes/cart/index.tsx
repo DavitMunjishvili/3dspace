@@ -2,7 +2,6 @@ import { getUser } from "~/session.server";
 import { Link, useLoaderData } from "@remix-run/react";
 import { json, redirect } from "@remix-run/server-runtime";
 import CartProductCard from "~/components/CartProductCard";
-import { getProductThumbnail } from "~/filesystem.server";
 import CheckoutCard from "~/components/CheckoutCard";
 
 import type { LoaderArgs } from "@remix-run/server-runtime";
@@ -12,12 +11,6 @@ export async function loader({ request }: LoaderArgs) {
   const user = await getUser(request);
   if (!user) return redirect("/");
   const cart = JSON.parse(user.cart || "[]") as CartType;
-  if (cart.length)
-    cart.map(async (item) => {
-      const image = getProductThumbnail(item.productId);
-      item.image = image.image ? image.image : "";
-      return item;
-    });
   return json(cart);
 }
 
@@ -37,7 +30,6 @@ export default function Cart() {
                   key={item.productId + item.color + item.size}
                   id={item.productId}
                   name={item.name}
-                  image={item.image}
                   originalPrice={item.originalPrice}
                   currentPrice={item.currentPrice}
                   size={item.size}
