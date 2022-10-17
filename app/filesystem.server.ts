@@ -47,7 +47,7 @@ export async function getProductThumbnail(id: Product["id"]) {
 
   const image = supabase.storage
     .from("product.images")
-    .getPublicUrl(`${id}/${list.data[0].name}`);
+    .getPublicUrl(`${id}/${list.data[0]?.name}`);
 
   return { error: undefined, publicURL: image.data.publicUrl };
 }
