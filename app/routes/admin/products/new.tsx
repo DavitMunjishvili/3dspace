@@ -64,7 +64,7 @@ export default function New() {
   useEffect(() => {
     if (!isProcessing) {
       formRef.current?.reset();
-      setProductImages([])
+      setProductImages([]);
     }
   }, [isProcessing]);
 
