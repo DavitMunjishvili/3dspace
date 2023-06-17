@@ -96,10 +96,10 @@ export default function New() {
       className="relative z-50"
     >
       <div className="fixed inset-0 flex items-center justify-center p-8 backdrop-blur-md backdrop-brightness-50">
-        <Dialog.Panel className="relative w-full max-w-lg rounded-xl bg-indigo-50 py-4 px-6">
+        <Dialog.Panel className="relative w-full max-w-lg rounded-xl bg-indigo-50 px-6 py-4">
           <button
             onClick={() => navigate(closeDestination)}
-            className="absolute top-4 left-4 rounded-md border-0 bg-red-300 p-0.5 text-white duration-150 hover:bg-red-400"
+            className="absolute left-4 top-4 rounded-md border-0 bg-red-300 p-0.5 text-white duration-150 hover:bg-red-400"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

@@ -5,9 +5,9 @@ import { useCallback, useEffect, useState } from "react";
 export default function WelcomeCarousel() {
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [emblaRef, emblaApi] = useEmblaCarousel({ axis: "y", loop: true }, [Autoplay({
-    delay: 5000
-  })]);
+  const [emblaRef, emblaApi] = useEmblaCarousel({ axis: "y", loop: true }, [
+    Autoplay({ delay: 5000 }),
+  ]);
 
   const onInit = useCallback((emblaApi: EmblaCarouselType) => {
     setScrollSnaps(emblaApi.scrollSnapList());
@@ -33,27 +33,33 @@ export default function WelcomeCarousel() {
   }, [emblaApi, onInit, onSelect]);
 
   return (
-    <div className="relative w-11/12 ml-auto">
-      <div className="relative z-10 overflow-hidden rounded-bl-[10rem] shadow-purple-900 shadow-xl" ref={emblaRef}>
-        <div className="flex flex-col h-[36rem]">
-          <div className="flex-[0_0_100%] flex items-center justify-center bg-purple-950 text-purple-50 text-2xl">
+    <div className="relative ml-auto w-11/12">
+      <div
+        className="relative z-10 overflow-hidden rounded-bl-[10rem] shadow-xl shadow-purple-900"
+        ref={emblaRef}
+      >
+        <div className="flex h-[36rem] flex-col">
+          <div className="flex flex-[0_0_100%] items-center justify-center bg-purple-950 text-2xl text-purple-50">
             Our models
           </div>
-          <div className="flex-[0_0_100%] flex items-center justify-center bg-purple-950 text-purple-50 text-2xl">
+          <div className="flex flex-[0_0_100%] items-center justify-center bg-purple-950 text-2xl text-purple-50">
             Custom models
           </div>
-          <div className="flex-[0_0_100%] flex items-center justify-center bg-purple-950 text-purple-50 text-2xl">
+          <div className="flex flex-[0_0_100%] items-center justify-center bg-purple-950 text-2xl text-purple-50">
             B2B
           </div>
         </div>
       </div>
-      <ul className="absolute z-20 right-2 top-1/2 -translate-y-1/2">
-        {scrollSnaps.map((_, index) =>
-          <li key={index}
-              onClick={() => scrollTo(index)}
-              className={`w-1.5 opacity-50 cursor-pointer h-12 my-1 rounded-full ${index === selectedIndex ? "bg-indigo-50" : "bg-indigo-500"}`}>
-          </li>
-        )}
+      <ul className="absolute right-2 top-1/2 z-20 -translate-y-1/2">
+        {scrollSnaps.map((_, index) => (
+          <li
+            key={index}
+            onClick={() => scrollTo(index)}
+            className={`my-1 h-12 w-1.5 cursor-pointer rounded-full opacity-50 ${
+              index === selectedIndex ? "bg-indigo-50" : "bg-indigo-500"
+            }`}
+          ></li>
+        ))}
       </ul>
     </div>
   );

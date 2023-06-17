@@ -39,9 +39,9 @@ export default function ProductPage() {
   const { images, product, availableSizes, availableColors } =
     useLoaderData<typeof loader>();
   const [selectedSize, setSelectedSize] =
-    useState<typeof availableSizes[number]>("Medium");
+    useState<(typeof availableSizes)[number]>("Medium");
   const [selectedColor, setSelectedColor] =
-    useState<typeof availableColors[number]>("Black");
+    useState<(typeof availableColors)[number]>("Black");
   const user = useOptionalUser();
   const navigate = useNavigate();
 
@@ -152,7 +152,7 @@ export default function ProductPage() {
             </RadioGroup>
           </div>
 
-          <p className="border-t border-b border-neutral-300/50 py-4">
+          <p className="border-b border-t border-neutral-300/50 py-4">
             {product.description}
           </p>
           <div>

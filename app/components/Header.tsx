@@ -171,7 +171,7 @@ export default function Header() {
               <div className="mx-4 flex flex-col border-t p-4 pt-20">
                 <button
                   onClick={() => setShowMenu((state) => !state)}
-                  className="absolute top-3 right-4 rounded-lg bg-indigo-200 p-2 duration-75 hover:bg-indigo-300"
+                  className="absolute right-4 top-3 rounded-lg bg-indigo-200 p-2 duration-75 hover:bg-indigo-300"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
