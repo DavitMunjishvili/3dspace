@@ -6,7 +6,7 @@ export default function WelcomeCarousel() {
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [emblaRef, emblaApi] = useEmblaCarousel({ axis: "y", loop: true }, [
-    Autoplay({ delay: 5000 }),
+    Autoplay({ delay: 7000 }),
   ]);
 
   const onInit = useCallback((emblaApi: EmblaCarouselType) => {
@@ -55,7 +55,7 @@ export default function WelcomeCarousel() {
           <li
             key={index}
             onClick={() => scrollTo(index)}
-            className={`my-1 h-12 w-1.5 cursor-pointer rounded-full opacity-50 ${
+            className={`my-1 h-12 w-1.5 cursor-pointer rounded-full opacity-50 transition-colors duration-300 ${
               index === selectedIndex ? "bg-indigo-50" : "bg-indigo-500"
             }`}
           ></li>
