@@ -226,7 +226,7 @@ export default function Header() {
           </div>
         </div>
       </header>
-      <div className="h-16 bg-indigo-50"></div>
+      <div className="h-16"></div>
     </>
   );
 }
