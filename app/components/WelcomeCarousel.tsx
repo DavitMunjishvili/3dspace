@@ -35,17 +35,17 @@ export default function WelcomeCarousel() {
   return (
     <div className="relative ml-auto w-11/12">
       <div
-        className="relative z-10 overflow-hidden rounded-bl-[10rem] shadow-xl shadow-purple-900"
+        className="relative z-10 overflow-hidden rounded-bl-[10rem] shadow-xl shadow-indigo-900"
         ref={emblaRef}
       >
         <div className="flex h-[36rem] flex-col">
-          <div className="flex flex-[0_0_100%] items-center justify-center bg-purple-950 text-2xl text-purple-50">
+          <div className="flex flex-[0_0_100%] items-center justify-center bg-indigo-950 text-2xl text-indigo-50">
             Our models
           </div>
-          <div className="flex flex-[0_0_100%] items-center justify-center bg-purple-950 text-2xl text-purple-50">
+          <div className="flex flex-[0_0_100%] items-center justify-center bg-indigo-950 text-2xl text-indigo-50">
             Custom models
           </div>
-          <div className="flex flex-[0_0_100%] items-center justify-center bg-purple-950 text-2xl text-purple-50">
+          <div className="flex flex-[0_0_100%] items-center justify-center bg-indigo-950 text-2xl text-indigo-50">
             B2B
           </div>
         </div>

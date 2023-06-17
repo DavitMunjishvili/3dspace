@@ -1,10 +1,9 @@
 import { getUser } from "~/session.server";
 import { Link, useLoaderData } from "@remix-run/react";
+import type { LoaderArgs } from "@remix-run/server-runtime";
 import { json, redirect } from "@remix-run/server-runtime";
 import CartProductCard from "~/components/CartProductCard";
 import CheckoutCard from "~/components/CheckoutCard";
-
-import type { LoaderArgs } from "@remix-run/server-runtime";
 import type { CartType } from "~/utils";
 
 export async function loader({ request }: LoaderArgs) {
@@ -17,7 +16,7 @@ export async function loader({ request }: LoaderArgs) {
 export default function Cart() {
   const cart = useLoaderData<typeof loader>();
   return (
-    <main className="min-h-screen bg-indigo-50 p-4">
+    <main className="min-h-[calc(100dvh-4rem)] bg-indigo-50 p-4">
       <div className="mx-auto mt-8 flex w-full max-w-7xl justify-between gap-8 rounded-xl border border-indigo-900 ">
         <div className="flex w-2/3 flex-col gap-8">
           {cart.length === 0 ? (

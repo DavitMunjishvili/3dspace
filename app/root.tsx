@@ -20,6 +20,7 @@ import tailwindStylesheetUrl from "./styles/tailwind.css";
 import mainStylesheetUrl from "./styles/index.css";
 import { getUser } from "./session.server";
 import Navbar from "./components/Navbar";
+import Footer from "~/components/Footer";
 
 export const links: LinksFunction = () => {
   return [
@@ -53,7 +54,10 @@ export default function App() {
       </head>
       <body>
         <Navbar />
-        <Outlet />
+        <div className="min-h-[calc(100dvh-4rem)]">
+          <Outlet />
+        </div>
+        <Footer />
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 html {
-  @apply h-full bg-black bg-gradient-to-tr from-black to-indigo-900;
+  @apply h-full bg-black bg-gradient-to-tr from-black to-indigo-900 bg-fixed;
 }

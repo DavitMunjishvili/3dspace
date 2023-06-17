@@ -56,7 +56,7 @@ export default function ProductPage() {
   };
 
   return (
-    <main className="min-h-screen bg-indigo-50">
+    <main className="min-h-[calc(100dvh-4rem)] bg-indigo-50">
       <div className="mx-auto grid max-w-7xl gap-8 px-6 pt-8 sm:grid-cols-2 sm:px-4">
         <div>
           {images &&
