@@ -19,7 +19,7 @@ import {
 import tailwindStylesheetUrl from "./styles/tailwind.css";
 import mainStylesheetUrl from "./styles/index.css";
 import { getUser } from "./session.server";
-import Header from "./components/Header";
+import Navbar from "./components/Navbar";
 
 export const links: LinksFunction = () => {
   return [
@@ -52,7 +52,7 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <Header />
+        <Navbar />
         <Outlet />
         <ScrollRestoration />
         <Scripts />
@@ -74,6 +74,7 @@ export function CatchBoundary() {
         <Links />
       </head>
       <body>
+        <Navbar />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="mx-8 rounded-xl bg-indigo-50 p-8 text-center shadow-xl">
             <h1 className="text-2xl">

@@ -3,7 +3,7 @@ import { Form, Link } from "@remix-run/react";
 import { useState } from "react";
 import { useOptionalUser } from "~/utils";
 
-export default function Header() {
+export default function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
   const user = useOptionalUser();
 
