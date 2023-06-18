@@ -30,7 +30,7 @@ export async function loader({ params }: LoaderArgs) {
     // images: productImages.images,
     images: [productImages.publicURL],
     product: productInfo,
-    availableSizes: ["Small", "Medium", "Large"] as const,
+    availableSizes: ["Small", "Standard", "Large"] as const,
     availableColors: ["Yellow", "Red", "Green", "Black"] as const,
   });
 }
@@ -39,7 +39,7 @@ export default function ProductPage() {
   const { images, product, availableSizes, availableColors } =
     useLoaderData<typeof loader>();
   const [selectedSize, setSelectedSize] =
-    useState<typeof availableSizes[number]>("Medium");
+    useState<typeof availableSizes[number]>("Standard");
   const [selectedColor, setSelectedColor] =
     useState<typeof availableColors[number]>("Black");
   const user = useOptionalUser();
@@ -49,7 +49,7 @@ export default function ProductPage() {
     if (user) {
       fetch(
         `/cart/add/${product.id}?size=${selectedSize}&color=${selectedColor}`
-      ).then((response) => console.log(response));
+      ).then((response) => console.log(response.statusText));
     } else {
       navigate("/login");
     }
