@@ -5,6 +5,10 @@ import bcrypt from "bcryptjs";
 import { prisma } from "~/db.server";
 import type { CartType } from "~/utils";
 
+export async function getUsers() {
+  return prisma.user.findMany();
+}
+
 export async function getUserById(id: User["id"]) {
   return prisma.user.findUnique({ where: { id } });
 }
@@ -41,6 +45,10 @@ export async function deleteUserByEmail(email: User["email"]) {
   return prisma.user.delete({ where: { email } });
 }
 
+export async function deleteUserById(id: User["id"]) {
+  return prisma.user.delete({ where: { id } });
+}
+
 export async function verifyLogin(
   email: User["email"],
   password: Password["hash"]
@@ -71,7 +79,7 @@ export async function verifyLogin(
 }
 
 export async function updateUserRole(id: User["id"], role: string) {
-  const user = await prisma.user.update({
+  return prisma.user.update({
     data: {
       role,
     },
@@ -79,7 +87,6 @@ export async function updateUserRole(id: User["id"], role: string) {
       id,
     },
   });
-  return user;
 }
 
 export async function addToCart(

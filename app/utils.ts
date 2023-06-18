@@ -60,16 +60,6 @@ export function useOptionalUser(): User | undefined {
   return data.user;
 }
 
-export function useUser(): User {
-  const maybeUser = useOptionalUser();
-  if (!maybeUser) {
-    throw new Error(
-      "No user found in root loader, but user is required by useUser. If user is optional, try useOptionalUser instead."
-    );
-  }
-  return maybeUser;
-}
-
 export function validateEmail(email: unknown): email is string {
   return typeof email === "string" && email.length > 3 && email.includes("@");
 }
@@ -82,30 +72,6 @@ export function validatePhone(phone: unknown): phone is string {
     phone[0] === "5" &&
     !phone.includes("+995")
   );
-}
-
-/**
- *
- * @param file pass file or any file
- * @returns base64 of passed file
- */
-export async function convertToBase64(
-  file: File
-): Promise<string | ArrayBuffer | null> {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-}
-
-export function getLocalCartQuantity() {
-  return 7;
 }
 
 export type CartType = {
@@ -172,10 +138,4 @@ export function generateProductColor(color: string) {
     case "Black":
       return "bg-black";
   }
-}
-
-export async function fetchProductDetails(productId: string) {
-  const response = await fetch(`/products/${productId}/details`);
-  const data = (await response.json()) as Product;
-  return data;
 }

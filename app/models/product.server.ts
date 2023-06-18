@@ -2,11 +2,11 @@ import type { Product } from "@prisma/client";
 import { prisma } from "~/db.server";
 
 export async function getProductById(id: Product["id"]) {
-  return await prisma.product.findUnique({ where: { id } });
+  return prisma.product.findUnique({ where: { id } });
 }
 
 export async function getProducts() {
-  return await prisma.product.findMany({
+  return prisma.product.findMany({
     where: { archive: false },
     select: {
       id: true,
@@ -18,7 +18,7 @@ export async function getProducts() {
 }
 
 export async function getProductsSearch(search: string) {
-  return await prisma.product.findMany({
+  return prisma.product.findMany({
     where: {
       AND: [
         { archive: false },
@@ -41,7 +41,7 @@ export async function getProductsSearch(search: string) {
 }
 
 export async function getProductsOnSale() {
-  return await prisma.product.findMany({
+  return prisma.product.findMany({
     where: { archive: false, currentPrice: { not: null } },
     select: {
       id: true,
@@ -61,7 +61,7 @@ export async function getFilters() {
     select: { categories: true },
   });
   let categories: string[] = [];
-  (await products).map((product) => {
+  products.map((product) => {
     return categories.push(...product.categories);
   });
   categories = [...new Set(categories)];
@@ -83,7 +83,7 @@ export async function addNewProduct(
   categories: Product["categories"],
   archive: Product["archive"]
 ) {
-  return await prisma.product.create({
+  return prisma.product.create({
     data: {
       name,
       description,

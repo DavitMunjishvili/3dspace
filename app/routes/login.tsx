@@ -53,7 +53,7 @@ export async function action({ request }: ActionArgs) {
   return createUserSession({
     request,
     userId: user.id,
-    remember: remember === "on" ? true : false,
+    remember: remember === "on",
     redirectTo: user.role === "dev" ? "/admin" : redirectTo,
   });
 }

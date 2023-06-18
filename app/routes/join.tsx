@@ -81,8 +81,13 @@ export async function action({ request }: ActionArgs) {
   if (typeof password !== "string" || password.length === 0) {
     return json(
       {
-        errors: generateErrorMessage(null, null, null, null, "Password is required"),
-
+        errors: generateErrorMessage(
+          null,
+          null,
+          null,
+          null,
+          "Password is required"
+        ),
       },
       { status: 400 }
     );
@@ -128,7 +133,7 @@ export async function action({ request }: ActionArgs) {
           null,
           null,
           null,
-          "Passwords don't match",
+          "Passwords don't match"
         ),
       },
       { status: 400 }
@@ -347,7 +352,9 @@ export default function Join() {
               name="confirmPassword"
               type="password"
               autoComplete="confirmPassword"
-              aria-invalid={actionData?.errors?.confirmPassword ? true : undefined}
+              aria-invalid={
+                actionData?.errors?.confirmPassword ? true : undefined
+              }
               aria-describedby="confirmPassword-error"
               className="w-full rounded-xl border border-indigo-900 bg-white px-2 py-1 focus:border-indigo-600 focus:ring-indigo-600"
             />

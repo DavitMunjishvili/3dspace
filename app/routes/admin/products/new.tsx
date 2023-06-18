@@ -15,8 +15,7 @@ import {
 } from "~/models/product.server";
 
 export async function loader() {
-  const categories = getEveryPossibleCategory();
-  return categories;
+  return getEveryPossibleCategory();
 }
 
 export async function action({ request }: ActionArgs) {
@@ -26,14 +25,14 @@ export async function action({ request }: ActionArgs) {
   const originalPrice = formData.get("originalPrice");
   const currentPrice = formData.get("currentPrice");
   const categories = formData.get("categories");
-  const images = formData.get("images");
+  // const images = formData.get("images");
   // TODO SAVE IMAGES
   if (!name || !description || !originalPrice || !categories)
     return {
       error:
         "Display Name, Product Description, Original Price and at least one Category is required",
     };
-  const product = await addNewProduct(
+  await addNewProduct(
     name.toString(),
     description.toString(),
     originalPrice.toString(),
@@ -230,7 +229,7 @@ export default function New() {
                 type="hidden"
                 name="categories"
                 value={Object.keys(selectedCategories)
-                  .filter((value) => (selectedCategories[value] ? true : false))
+                  .filter((value) => (selectedCategories[value]))
                   .join("|")}
               />
               <div className="mt-1 grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3">

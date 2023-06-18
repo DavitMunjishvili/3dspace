@@ -24,7 +24,7 @@ export default function Cart() {
             <h1>Empty</h1>
           ) : (
             <>
-              {cart.map((item) => (
+              {cart?.map((item) => (
                 <CartProductCard
                   key={item.productId + item.color + item.size}
                   id={item.productId}

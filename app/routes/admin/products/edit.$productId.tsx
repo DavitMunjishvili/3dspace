@@ -25,7 +25,7 @@ export async function action({ request }: ActionArgs) {
   const originalPrice = formData.get("originalPrice");
   const currentPrice = formData.get("currentPrice");
   const categories = formData.get("categories");
-  const archive = formData.get("archive") === "on" ? true : false;
+  const archive = formData.get("archive") === "on";
 
   if (!id || !name || !description || !originalPrice || !categories) return {};
   const response = await updateProduct(
@@ -213,7 +213,7 @@ export default function EditProduct() {
                 type="hidden"
                 name="categories"
                 value={Object.keys(selectedCategories)
-                  .filter((value) => (selectedCategories[value] ? true : false))
+                  .filter((value) => (selectedCategories[value]))
                   .join("|")}
               />
               <div className="mt-1 grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3">

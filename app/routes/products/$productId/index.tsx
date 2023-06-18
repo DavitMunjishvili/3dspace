@@ -101,7 +101,7 @@ export default function ProductPage() {
                   <RadioGroup.Option
                     key={plan}
                     value={plan}
-                    className={({ active, checked }) =>
+                    className={({ checked }) =>
                       `
                   ${
                     checked
@@ -111,7 +111,7 @@ export default function ProductPage() {
                     flex cursor-pointer rounded-lg border border-indigo-900 px-4 py-2 shadow-md duration-150`
                     }
                   >
-                    {({ active, checked }) => (
+                    {({ checked }) => (
                       <div className="flex w-full items-center justify-between text-sm">
                         <RadioGroup.Label
                           as="p"
@@ -139,7 +139,7 @@ export default function ProductPage() {
                   <RadioGroup.Option
                     key={color}
                     value={color}
-                    className={({ active, checked }) =>
+                    className={({ checked }) =>
                       `
                   ${checked ? "outline-none" : "outline-1 outline-offset-2 "}
                     flex cursor-pointer outline-indigo-900 ${generateProductColor(
