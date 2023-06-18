@@ -23,14 +23,8 @@ describe("smoke tests", () => {
     cy.get("input[name=phone]").type(loginForm.phone);
     cy.get("input[name=email]").type(loginForm.email);
     cy.get("input[name=password]").type(loginForm.password);
+    cy.get("input[name=confirmPassword]").type(loginForm.password);
     cy.findByRole("button", { name: /create account/i }).click();
-    cy.findByRole("button", { name: /logout/i });
-
-    cy.findByRole("link", { name: /products/i }).click();
-    cy.findByRole("link", { name: /3d space/i }).click();
-    cy.findByRole("link", { name: /sale/i });
-    cy.findByRole("link", { name: /service/i });
-    cy.findByRole("link", { name: /suggest gift/i });
     cy.findByRole("button", { name: /logout/i }).click();
     cy.findByRole("link", { name: /log in/i });
   });

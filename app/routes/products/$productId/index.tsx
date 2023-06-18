@@ -39,9 +39,9 @@ export default function ProductPage() {
   const { images, product, availableSizes, availableColors } =
     useLoaderData<typeof loader>();
   const [selectedSize, setSelectedSize] =
-    useState<typeof availableSizes[number]>("Standard");
+    useState<(typeof availableSizes)[number]>("Standard");
   const [selectedColor, setSelectedColor] =
-    useState<typeof availableColors[number]>("Black");
+    useState<(typeof availableColors)[number]>("Black");
   const user = useOptionalUser();
   const navigate = useNavigate();
 
@@ -56,7 +56,7 @@ export default function ProductPage() {
   };
 
   return (
-    <main className="min-h-screen bg-indigo-50">
+    <main className="min-h-[calc(100dvh-4rem)] bg-indigo-50">
       <div className="mx-auto grid max-w-7xl gap-8 px-6 pt-8 sm:grid-cols-2 sm:px-4">
         <div>
           {images &&
@@ -152,7 +152,7 @@ export default function ProductPage() {
             </RadioGroup>
           </div>
 
-          <p className="border-t border-b border-neutral-300/50 py-4">
+          <p className="border-b border-t border-neutral-300/50 py-4">
             {product.description}
           </p>
           <div>

@@ -21,6 +21,7 @@ export async function action({ request }: ActionArgs) {
   const phone = formData.get("phone");
   const email = formData.get("email");
   const password = formData.get("password");
+  const confirmPassword = formData.get("confirmPassword");
   const redirectTo = safeRedirect(formData.get("redirectTo"), "/");
 
   function generateErrorMessage(
@@ -28,9 +29,10 @@ export async function action({ request }: ActionArgs) {
     lastName: null | string = null,
     phone: null | string = null,
     email: null | string = null,
-    password: null | string = null
+    password: null | string = null,
+    confirmPassword: null | string = null
   ) {
-    return { name, lastName, phone, email, password };
+    return { name, lastName, phone, email, password, confirmPassword };
   }
 
   if (typeof name !== "string" || name.length === 0) {
@@ -79,13 +81,8 @@ export async function action({ request }: ActionArgs) {
   if (typeof password !== "string" || password.length === 0) {
     return json(
       {
-        errors: {
-          name: null,
-          lastName: null,
-          phone: null,
-          email: null,
-          password: "Password is required",
-        },
+        errors: generateErrorMessage(null, null, null, null, "Password is required"),
+
       },
       { status: 400 }
     );
@@ -100,6 +97,38 @@ export async function action({ request }: ActionArgs) {
           null,
           null,
           "Password is too short"
+        ),
+      },
+      { status: 400 }
+    );
+  }
+
+  if (typeof confirmPassword !== "string" || confirmPassword.length === 0) {
+    return json(
+      {
+        errors: generateErrorMessage(
+          null,
+          null,
+          null,
+          null,
+          null,
+          "Confirm password is required"
+        ),
+      },
+      { status: 400 }
+    );
+  }
+
+  if (password !== confirmPassword) {
+    return json(
+      {
+        errors: generateErrorMessage(
+          null,
+          null,
+          null,
+          null,
+          null,
+          "Passwords don't match",
         ),
       },
       { status: 400 }
@@ -147,6 +176,7 @@ export default function Join() {
   const phoneRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const confirmPasswordRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (actionData?.errors?.name) {
@@ -159,6 +189,8 @@ export default function Join() {
       emailRef.current?.focus();
     } else if (actionData?.errors?.password) {
       passwordRef.current?.focus();
+    } else if (actionData?.errors?.confirmPassword) {
+      confirmPasswordRef.current?.focus();
     }
   }, [actionData]);
 
@@ -288,7 +320,7 @@ export default function Join() {
               ref={passwordRef}
               name="password"
               type="password"
-              autoComplete="new-password"
+              autoComplete="password"
               aria-invalid={actionData?.errors?.password ? true : undefined}
               aria-describedby="password-error"
               className="w-full rounded-xl border border-indigo-900 bg-white px-2 py-1 focus:border-indigo-600 focus:ring-indigo-600"
@@ -301,10 +333,36 @@ export default function Join() {
           </div>
         </div>
 
+        <div>
+          <label
+            htmlFor="confirmPassword"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Confirm password
+          </label>
+          <div className="mt-1">
+            <input
+              id="confirmPassword"
+              ref={confirmPasswordRef}
+              name="confirmPassword"
+              type="password"
+              autoComplete="confirmPassword"
+              aria-invalid={actionData?.errors?.confirmPassword ? true : undefined}
+              aria-describedby="confirmPassword-error"
+              className="w-full rounded-xl border border-indigo-900 bg-white px-2 py-1 focus:border-indigo-600 focus:ring-indigo-600"
+            />
+            {actionData?.errors?.confirmPassword && (
+              <div className="pt-1 text-red-700" id="confirmPassword-error">
+                {actionData.errors.confirmPassword}
+              </div>
+            )}
+          </div>
+        </div>
+
         <input type="hidden" name="redirectTo" value={redirectTo} />
         <button
           type="submit"
-          className="w-full rounded-xl bg-indigo-500 py-2 px-4 text-white duration-150 hover:bg-indigo-600 focus:bg-indigo-400"
+          className="w-full rounded-xl bg-indigo-500 px-4 py-2 text-white duration-150 hover:bg-indigo-600 focus:bg-indigo-400"
         >
           Create Account
         </button>

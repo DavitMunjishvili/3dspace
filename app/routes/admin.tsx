@@ -15,7 +15,7 @@ function classNames(...classes: string[]) {
 export default function Admin() {
   const pages = ["products", "orders", "users"];
   return (
-    <div className="mx-auto mt-8 w-full max-w-7xl rounded-xl bg-indigo-50 py-8 px-8">
+    <div className="mx-auto mt-8 w-full max-w-7xl rounded-xl bg-indigo-50 px-8 py-8">
       <div className="mb-4 flex space-x-4 rounded-xl bg-indigo-900/50 p-1">
         {pages.map((page) => (
           <NavLink
