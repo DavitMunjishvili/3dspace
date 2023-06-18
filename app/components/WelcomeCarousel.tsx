@@ -55,7 +55,7 @@ export default function WelcomeCarousel() {
           <li
             key={index}
             onClick={() => scrollTo(index)}
-            className={`my-1 h-12 w-1.5 cursor-pointer rounded-full opacity-50 transition-colors duration-300 ${
+            className={`my-1 h-12 w-1.5 cursor-pointer rounded-full border border-indigo-950 opacity-50 transition-colors duration-300 ${
               index === selectedIndex ? "bg-indigo-50" : "bg-indigo-500"
             }`}
           ></li>
