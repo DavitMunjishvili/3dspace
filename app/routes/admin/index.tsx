@@ -1,3 +1,5 @@
-export default function AdminPage() {
-  return <p className="text-center text-2xl">Select Page</p>;
+import { redirect } from "@remix-run/node";
+
+export function loader() {
+  return redirect('/admin/products')
 }
