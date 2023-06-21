@@ -4,7 +4,7 @@ import { useLoaderData } from "@remix-run/react";
 export function loader() {
   return json({
     DATABASE_URL: process.env.DATABASE_URL,
-    SESSION_SECRET: process.env.SESSION_SECRET
+    SESSION_SECRET: process.env.SESSION_SECRET,
   });
 }
 
@@ -13,8 +13,14 @@ export default function Secrets() {
   return (
     <div>
       <ul>
-        <li><span className="font-bold">DATABASE_URL:</span> <code>{env.DATABASE_URL}</code></li>
-        <li><span className="font-bold">SESSION_SECRET:</span> <code>{env.SESSION_SECRET}</code></li>
+        <li>
+          <span className="font-bold">DATABASE_URL:</span>{" "}
+          <code>{env.DATABASE_URL}</code>
+        </li>
+        <li>
+          <span className="font-bold">SESSION_SECRET:</span>{" "}
+          <code>{env.SESSION_SECRET}</code>
+        </li>
       </ul>
     </div>
   );

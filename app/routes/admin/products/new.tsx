@@ -229,7 +229,7 @@ export default function New() {
                 type="hidden"
                 name="categories"
                 value={Object.keys(selectedCategories)
-                  .filter((value) => (selectedCategories[value]))
+                  .filter((value) => selectedCategories[value])
                   .join("|")}
               />
               <div className="mt-1 grid grid-cols-1 gap-1 md:grid-cols-2 lg:grid-cols-3">

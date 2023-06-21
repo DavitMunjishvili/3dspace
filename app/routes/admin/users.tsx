@@ -6,11 +6,11 @@ import { prisma } from "~/db.server";
 export async function action() {
   const users = await prisma.user.updateMany({
     data: {
-      cart: '[]'
-    }
-  })
+      cart: "[]",
+    },
+  });
 
-  return json(users)
+  return json(users);
 }
 
 export async function loader() {
@@ -25,7 +25,7 @@ export default function AdminUsers() {
     <>
       <form method="post">
         <button
-          className="px-3 py-2 my-2 bg-violet-300 rounded border border-violet-400"
+          className="my-2 rounded border border-violet-400 bg-violet-300 px-3 py-2"
           type="submit"
         >
           Reset carts for everyone
