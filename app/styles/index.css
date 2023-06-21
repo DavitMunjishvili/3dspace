@@ -5,3 +5,7 @@
 html {
   @apply h-full bg-black bg-gradient-to-tr from-black to-indigo-900 bg-fixed;
 }
+
+code {
+  @apply p-0.5 bg-gray-200 text-sm text-red-800 border-gray-400 border rounded;
+}
