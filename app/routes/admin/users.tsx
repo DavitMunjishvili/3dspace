@@ -6,7 +6,7 @@ import { prisma } from "~/db.server";
 export async function action() {
   const users = await prisma.user.updateMany({
     data: {
-      cart: '[{"name": "lastName"}]'
+      cart: '[]'
     }
   })
 
