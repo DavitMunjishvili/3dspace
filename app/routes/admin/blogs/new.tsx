@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { type ActionArgs } from "@remix-run/node";
 import { getUser } from "~/session.server";
 import { addNewBlog } from "~/models/blog.server";
+import { redirect } from "@remix-run/server-runtime";
 
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
@@ -12,8 +13,8 @@ export async function action({ request }: ActionArgs) {
   const content = formData.get("content")!.toString();
   const user = await getUser(request);
 
-  const blog = await addNewBlog(title, content, user!.id);
-  return { blog };
+  await addNewBlog(title, content, user!.id);
+  return redirect("/admin/blogs");
 }
 
 export default function NewBlog() {
@@ -37,7 +38,7 @@ export default function NewBlog() {
       className="relative z-50"
     >
       <div className="fixed inset-0 flex items-center justify-center p-8 backdrop-blur-md backdrop-brightness-50">
-        <Dialog.Panel className="relative w-full max-w-2xl rounded-xl bg-indigo-50 px-6 py-4">
+        <Dialog.Panel className="relative max-h-[95vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-indigo-50 px-6 py-4">
           <button
             onClick={() => navigate(closeDestination)}
             className="absolute left-4 top-4 rounded-md border-0 bg-red-300 p-0.5 text-white duration-150 hover:bg-red-400"
@@ -75,11 +76,13 @@ export default function NewBlog() {
               type="text"
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             />
-            <RichTextEditor
-              content={content}
-              setContent={setContent}
-              viewer={false}
-            />
+            <div className="mt-4 rounded bg-white p-4 shadow">
+              <RichTextEditor
+                content={content}
+                setContent={setContent}
+                viewer={false}
+              />
+            </div>
             <input name="content" value={content} readOnly hidden />
             <button
               type="submit"
