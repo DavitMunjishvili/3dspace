@@ -9,7 +9,7 @@ type Blog = {
 };
 export function BlogCard({ blog }: { blog: Blog }) {
   return (
-    <div className="w-full rounded bg-violet-50 p-4 shadow-lg">
+    <div className="max-h-96 w-full overflow-y-auto rounded bg-violet-50 p-4 shadow-lg">
       <h1 className="font-semibild flex items-center justify-center gap-2 text-2xl">
         {blog.title}
         <span className="text-base font-normal text-gray-400">
