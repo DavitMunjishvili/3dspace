@@ -26,7 +26,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
   }
 
   return (
-    <div className="mb-4 mt-6 flex gap-2 child:flex child:items-center child:justify-center child:overflow-hidden child:rounded-sm child:border child:border-gray-400">
+    <div className="mb-4 flex gap-2 child:flex child:items-center child:justify-center child:overflow-hidden child:rounded-sm child:border child:border-gray-400">
       {/* --- Styling --- */}
       <div className="child:h-full child:p-2 child:duration-75 child-hover:bg-indigo-200/50 child-disabled:pointer-events-none child-disabled:bg-gray-400/50">
         <button
