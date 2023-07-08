@@ -57,6 +57,7 @@ export default function AdminUsers() {
                 {JSON.parse(user?.cart || "[]").length}
               </td>
               <td className="border border-gray-300 px-2 py-1">
+                <Link to={`edit/${user.id}`}>✏️</Link>
                 <Link to={`delete/${user.id}`}>❌</Link>
               </td>
             </tr>

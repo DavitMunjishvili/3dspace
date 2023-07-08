@@ -8,18 +8,19 @@ generator client {
 }
 
 model User {
-  id       String   @id @default(cuid())
+  id       String @id @default(cuid())
   name     String
   lastName String
-  phone    String   @unique
-  email    String   @unique
-  role     String   @default("customer")
-  cart     String   @default("[]")
+  phone    String @unique
+  email    String @unique
+  role     String @default("customer")
+  cart     String @default("[]")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   password Password?
+  blogs    Blog[]
 }
 
 model Password {
@@ -30,13 +31,28 @@ model Password {
 }
 
 model Product {
-  id            Int   @id @default(autoincrement())
+  id            Int      @id @default(autoincrement())
   name          String
   description   String?
   originalPrice String
   currentPrice  String?
   categories    String[]
   archive       Boolean  @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Blog {
+  id Int @id @default(autoincrement())
+
+  title   String
+  content String
+  views   Int     @default(0)
+  archive Boolean @default(false)
+
+  author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  authorId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
