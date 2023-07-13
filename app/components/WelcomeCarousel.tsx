@@ -42,11 +42,26 @@ export default function WelcomeCarousel() {
           <div className="flex flex-[0_0_100%] items-center justify-center bg-indigo-950 text-2xl text-indigo-50">
             Our models
           </div>
-          <div className="flex flex-[0_0_100%] items-center justify-center bg-indigo-950 text-2xl text-indigo-50">
-            Custom models
+          <div className="flex flex-[0_0_100%] flex-col gap-2 items-center justify-center bg-indigo-950 p-6 text-2xl text-indigo-50">
+            <h1>Special print</h1>
+            <div className="flex-1 w-full flex items-stretch justify-center gap-4">
+              <div className="flex-1 flex w-full cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl">
+                <h2>I have a .stl file</h2>
+              </div>
+              <div className="flex-1 flex w-full cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl">
+                <h2>I need help from designer</h2>
+              </div>
+            </div>
           </div>
-          <div className="flex flex-[0_0_100%] items-center justify-center bg-indigo-950 text-2xl text-indigo-50">
-            B2B
+          <div className="flex flex-[0_0_100%] flex-col items-center justify-center gap-4 bg-indigo-950 text-2xl text-indigo-50">
+            <h1 className="text-4xl">B2B</h1>
+            <p className="max-w-3xl text-center text-lg">
+              ჩვენ ვთანამშრომლობთ ბიზნესებთან თითქმის ყველა არსებულ სექტორში.
+              ჩვენი სერვისები მოიცავს როგორც ფართო წარმოებას მოთხოვნის მიხედვით,
+              ასევე უშუალოდ დიზაინების შექმნასა და წარმოებას. დეტალებისთვის
+              მოგვწერეთ იმელზე ან დაგვირეკეთ ნომერზე, რომელიც მითითებულია
+              მთავარი გვერდის ბოლოში.
+            </p>
           </div>
         </div>
       </div>
