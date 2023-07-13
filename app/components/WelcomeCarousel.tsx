@@ -42,13 +42,13 @@ export default function WelcomeCarousel() {
           <div className="flex flex-[0_0_100%] items-center justify-center bg-indigo-950 text-2xl text-indigo-50">
             Our models
           </div>
-          <div className="flex flex-[0_0_100%] flex-col gap-2 items-center justify-center bg-indigo-950 p-6 text-2xl text-indigo-50">
+          <div className="flex flex-[0_0_100%] flex-col items-center justify-center gap-2 bg-indigo-950 p-6 text-2xl text-indigo-50">
             <h1>Special print</h1>
-            <div className="flex-1 w-full flex items-stretch justify-center gap-4">
-              <div className="flex-1 flex w-full cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl">
+            <div className="flex w-full flex-1 items-stretch justify-center gap-4">
+              <div className="flex w-full flex-1 cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl">
                 <h2>I have a .stl file</h2>
               </div>
-              <div className="flex-1 flex w-full cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl">
+              <div className="flex w-full flex-1 cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl">
                 <h2>I need help from designer</h2>
               </div>
             </div>
