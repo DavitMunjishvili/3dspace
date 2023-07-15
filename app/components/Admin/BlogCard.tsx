@@ -2,6 +2,7 @@ import RichTextEditor from "~/components/RichTextEditor";
 import { useOptionalUser } from "~/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "@remix-run/react";
 
 type Blog = {
   id: number;
@@ -16,9 +17,12 @@ export function BlogCard({ blog }: { blog: Blog }) {
   return (
     <div className="relative max-h-96 w-full overflow-y-auto rounded bg-violet-50 p-4 shadow-lg">
       {user?.role === "dev" && (
-        <button className="absolute right-4 top-4 flex h-6 w-6 items-center justify-center rounded bg-red-500 text-red-50">
+        <Link
+          to={`delete/${blog.id}`}
+          className="absolute right-4 top-4 flex h-6 w-6 items-center justify-center rounded bg-red-500 text-red-50"
+        >
           <FontAwesomeIcon size="sm" icon={faTrash} />
-        </button>
+        </Link>
       )}
       <h1 className="font-semibild flex items-center justify-center gap-2 text-2xl">
         {blog.title}

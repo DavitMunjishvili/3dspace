@@ -5,6 +5,10 @@ export async function getBlogById(id: Blog["id"]) {
   return prisma.blog.findUnique({ where: { id } });
 }
 
+export async function deleteBlogById(id: Blog["id"]) {
+  return prisma.blog.delete({ where: { id } });
+}
+
 export async function addNewBlog(
   title: Blog["title"],
   content: Blog["content"],

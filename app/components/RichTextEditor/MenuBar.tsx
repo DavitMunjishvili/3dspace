@@ -30,6 +30,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
       {/* --- Styling --- */}
       <div className="child:h-full child:p-2 child:duration-75 child-hover:bg-indigo-200/50 child-disabled:pointer-events-none child-disabled:bg-gray-400/50">
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editor.can().chain().focus().toggleBold().run()}
           className={editor.isActive("bold") ? "bg-indigo-300/50" : ""}
@@ -37,6 +38,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
           <FontAwesomeIcon icon={faBold} />
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={!editor.can().chain().focus().toggleItalic().run()}
           className={editor.isActive("italic") ? "bg-indigo-300/50" : ""}
@@ -44,6 +46,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
           <FontAwesomeIcon icon={faItalic} />
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleStrike().run()}
           disabled={!editor.can().chain().focus().toggleStrike().run()}
           className={editor.isActive("strike") ? "bg-indigo-300/50" : ""}
@@ -55,12 +58,14 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
       {/* --- Element --- */}
       <div className="child:h-full child:p-2 child:duration-75 child-hover:bg-indigo-200/50 child-disabled:pointer-events-none child-disabled:bg-gray-400/50">
         <button
+          type="button"
           onClick={() => editor.chain().focus().setParagraph().run()}
           className={editor.isActive("paragraph") ? "bg-indigo-300/50" : ""}
         >
           <FontAwesomeIcon icon={faParagraph} />
         </button>
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 1 }).run()
           }
@@ -72,6 +77,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
           <FontAwesomeIcon icon={fa1} />
         </button>
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 2 }).run()
           }
@@ -83,6 +89,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
           <FontAwesomeIcon icon={fa2} />
         </button>
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 3 }).run()
           }
@@ -94,6 +101,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
           <FontAwesomeIcon icon={fa3} />
         </button>
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 4 }).run()
           }
@@ -105,6 +113,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
           <FontAwesomeIcon icon={fa4} />
         </button>
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 5 }).run()
           }
@@ -116,6 +125,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
           <FontAwesomeIcon icon={fa5} />
         </button>
         <button
+          type="button"
           onClick={() =>
             editor.chain().focus().toggleHeading({ level: 6 }).run()
           }
@@ -131,12 +141,14 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
       {/* --- List --- */}
       <div className="child:h-full child:p-2 child:duration-75 child-hover:bg-indigo-200/50 child-disabled:pointer-events-none child-disabled:bg-gray-400/50">
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           className={editor.isActive("bulletList") ? "bg-indigo-300/50" : ""}
         >
           <FontAwesomeIcon icon={faListUl} />
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           className={editor.isActive("orderedList") ? "bg-indigo-300/50" : ""}
         >
@@ -147,6 +159,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
       {/* --- Codes --- */}
       <div className="child:h-full child:p-2 child:duration-75 child-hover:bg-indigo-200/50 child-disabled:pointer-events-none child-disabled:bg-gray-400/50">
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleCode().run()}
           disabled={!editor.can().chain().focus().toggleCode().run()}
           className={editor.isActive("code") ? "bg-indigo-300/50" : ""}
@@ -154,6 +167,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
           <FontAwesomeIcon icon={faTerminal} />
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
           className={editor.isActive("codeBlock") ? "bg-indigo-300/50" : ""}
         >
@@ -164,12 +178,14 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
       {/* --- History --- */}
       <div className="child:h-full child:p-2 child:duration-75 child-hover:bg-indigo-200/50 child-disabled:pointer-events-none child-disabled:bg-gray-400/50">
         <button
+          type="button"
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editor.can().chain().focus().undo().run()}
         >
           <FontAwesomeIcon icon={faUndo} />
         </button>
         <button
+          type="button"
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editor.can().chain().focus().redo().run()}
         >
