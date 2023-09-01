@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const prisma = new PrismaClient();
 
 async function seed() {
+  return
   await prisma.user.deleteMany();
   await prisma.blog.deleteMany();
 
