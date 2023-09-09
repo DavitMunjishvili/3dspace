@@ -38,7 +38,7 @@ export default function NewBlog() {
       className="relative z-50"
     >
       <div className="fixed inset-0 flex items-center justify-center p-8 backdrop-blur-md backdrop-brightness-50">
-        <Dialog.Panel className="relative max-h-[95vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-indigo-50 px-6 py-4">
+        <Dialog.Panel className="relative max-h-[95vh] w-full max-w-5xl overflow-y-auto rounded-xl bg-indigo-50 px-6 py-4">
           <button
             onClick={() => navigate(closeDestination)}
             className="absolute left-4 top-4 rounded-md border-0 bg-red-300 p-0.5 text-white duration-150 hover:bg-red-400"
