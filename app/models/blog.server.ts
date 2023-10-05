@@ -5,6 +5,23 @@ export async function getBlogById(id: Blog["id"]) {
   return prisma.blog.findUnique({ where: { id } });
 }
 
+export async function getBlogs() {
+  return prisma.blog.findMany({
+    where: { archive: false },
+    select: {
+      id: true,
+      content: true,
+      title: true,
+      views: true,
+      authorId: true,
+      archive: true,
+      createdAt: true,
+      updatedAt: true,
+      author: false,
+    },
+  });
+}
+
 export async function updateBlogById(
   id: Blog["id"],
   title: Blog["title"],

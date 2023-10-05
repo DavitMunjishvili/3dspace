@@ -30,7 +30,7 @@ export default function RichTextEditor({
   return (
     <div>
       {!viewer && <MenuBar editor={editor} />}
-      <EditorContent onBlur={eventHandler} editor={editor} />
+      <EditorContent onBlur={eventHandler} className="prose" editor={editor} />
     </div>
   );
 }
