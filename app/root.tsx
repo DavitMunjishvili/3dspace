@@ -55,7 +55,7 @@ export default function App() {
       </head>
       <body>
         <Navbar />
-        <div className="min-h-[calc(100dvh-4rem)]">
+        <div className="min-h-[calc(100dvh-4rem)] pb-16">
           <Outlet />
         </div>
         <Footer />
