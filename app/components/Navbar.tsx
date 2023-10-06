@@ -195,13 +195,15 @@ export default function Navbar() {
                 </Link>
                 <hr className="my-6" />
                 {user ? (
-                  <Link
-                    onClick={() => setShowMenu(false)}
-                    className="m-2 rounded-lg bg-indigo-200 px-4 py-2 text-center text-lg hover:bg-indigo-300"
-                    to="/logout"
-                  >
-                    Logout
-                  </Link>
+                  <Form action="/logout" method="post" className="flex">
+                    <button
+                      type="submit"
+                      className="m-2 flex-1 rounded-lg bg-indigo-200 px-4 py-2 text-center text-lg hover:bg-indigo-300"
+                      onClick={() => setShowMenu(false)}
+                    >
+                      Logout
+                    </button>
+                  </Form>
                 ) : (
                   <>
                     <Link
