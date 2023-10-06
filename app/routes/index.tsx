@@ -12,8 +12,6 @@ export async function loader() {
 export default function Index() {
   const { blogs } = useLoaderData<typeof loader>();
 
-  console.log(blogs);
-
   return (
     <main className="space-y-64">
       <WelcomeCarousel />
