@@ -16,6 +16,7 @@ export default function Index() {
   return (
     <main className="space-y-64">
       <WelcomeCarousel />
+      {/* @ts-ignore */}
       {blogs.length > 0 && <Blogs blogs={blogs as Blog[]} />}
     </main>
   );
