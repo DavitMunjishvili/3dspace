@@ -21,8 +21,10 @@ import mainStylesheetUrl from "./styles/index.css";
 import { getUser } from "./session.server";
 import Navbar from "./components/Navbar";
 import Footer from "~/components/Footer";
+import FacebookChat from "./components/Integrations/FacebookChat";
 
 export const links: LinksFunction = () => {
+
   return [
     { rel: "stylesheet", href: tailwindStylesheetUrl },
     { rel: "stylesheet", href: mainStylesheetUrl },
@@ -54,6 +56,8 @@ export default function App() {
         <title>3D Space</title>
       </head>
       <body>
+        <script async defer crossOrigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+        <FacebookChat />
         <Navbar />
         <div className="min-h-[calc(100dvh-4rem)] pb-16">
           <Outlet />
