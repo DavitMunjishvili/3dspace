@@ -1,3 +1,4 @@
+import { type Blog } from "@prisma/client";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import Blogs from "~/components/Blogs";
@@ -15,7 +16,7 @@ export default function Index() {
   return (
     <main className="space-y-64">
       <WelcomeCarousel />
-      {blogs.length > 0 && <Blogs blogs={blogs} />}
+      {blogs.length > 0 && <Blogs blogs={blogs as Blog[]} />}
     </main>
   );
 }
