@@ -8,7 +8,7 @@ export async function getBlogById(id: Blog["id"]) {
 export async function getBlogs() {
   return prisma.blog.findMany({
     where: { archive: false },
-    take: 3
+    take: 3,
   });
 }
 

@@ -1,6 +1,7 @@
 import useEmblaCarousel, { type EmblaCarouselType } from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useCallback, useEffect, useState } from "react";
+import { Link } from "@remix-run/react";
 
 export default function WelcomeCarousel() {
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
@@ -39,8 +40,15 @@ export default function WelcomeCarousel() {
         ref={emblaRef}
       >
         <div className="flex h-[36rem] flex-col">
-          <div className="flex flex-[0_0_100%] items-center justify-center bg-indigo-950 text-2xl text-indigo-50">
-            Our models
+          <div className="flex flex-[0_0_100%] flex-col items-center justify-center gap-2 bg-indigo-950 p-6 text-2xl text-indigo-50">
+            <div className="flex w-full flex-1 items-stretch justify-center gap-4">
+              <Link
+                to="/products/lithophane"
+                className="flex w-full flex-1 cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl"
+              >
+                <h2>Lithophane</h2>
+              </Link>
+            </div>
           </div>
           <div className="flex flex-[0_0_100%] flex-col items-center justify-center gap-2 bg-indigo-950 p-6 text-2xl text-indigo-50">
             <h1>Special print</h1>

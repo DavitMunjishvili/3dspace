@@ -23,3 +23,10 @@ export async function getProductThumbnail(id: Product["id"]) {
 
   return { error: undefined, publicURL: image.data.publicUrl };
 }
+
+export async function uploadImage(bucket: string, name: string, image: File) {
+  const { data, error } = await supabase.storage
+    .from(bucket)
+    .upload(name, image);
+  return { data, error };
+}

@@ -20,6 +20,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   password Password?
+  orders   Order[]
   blogs    Blog[]
 }
 
@@ -53,6 +54,21 @@ model Blog {
 
   author   User   @relation(fields: [authorId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   authorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id Int @id @default(autoincrement())
+
+  isPaid       Boolean @default(false)
+  state        String  @default("pending")
+  type         String
+  orderDetails String?
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

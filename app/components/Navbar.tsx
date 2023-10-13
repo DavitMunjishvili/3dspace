@@ -8,6 +8,7 @@ export default function Navbar() {
   const user = useOptionalUser();
 
   useEffect(() => {
+    if (process.env.NODE_ENV === "development") return;
     const fbRoot = document.createElement("div");
     fbRoot.setAttribute("id", "fb-root");
     document.body.appendChild(fbRoot);

@@ -23,7 +23,6 @@ import Navbar from "./components/Navbar";
 import Footer from "~/components/Footer";
 
 export const links: LinksFunction = () => {
-
   return [
     { rel: "stylesheet", href: tailwindStylesheetUrl },
     { rel: "stylesheet", href: mainStylesheetUrl },

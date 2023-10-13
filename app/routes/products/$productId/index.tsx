@@ -30,16 +30,13 @@ export async function loader({ params }: LoaderArgs) {
     // images: productImages.images,
     images: [productImages.publicURL],
     product: productInfo,
-    availableSizes: ["Small", "Standard", "Large"] as const,
+    // availableSizes: ["Small", "Standard", "Large"] as const,
     availableColors: ["Yellow", "Red", "Green", "Black"] as const,
   });
 }
 
 export default function ProductPage() {
-  const { images, product, availableSizes, availableColors } =
-    useLoaderData<typeof loader>();
-  const [selectedSize, setSelectedSize] =
-    useState<(typeof availableSizes)[number]>("Standard");
+  const { images, product, availableColors } = useLoaderData<typeof loader>();
   const [selectedColor, setSelectedColor] =
     useState<(typeof availableColors)[number]>("Black");
   const user = useOptionalUser();
@@ -47,9 +44,9 @@ export default function ProductPage() {
 
   const addToCart = () => {
     if (user) {
-      fetch(
-        `/cart/add/${product.id}?size=${selectedSize}&color=${selectedColor}`
-      ).then((response) => console.log(response.statusText));
+      fetch(`/cart/add/${product.id}?color=${selectedColor}`).then((response) =>
+        console.log(response.statusText)
+      );
     } else {
       navigate("/login");
     }
@@ -88,46 +85,6 @@ export default function ProductPage() {
               product.originalPrice + "₾"
             )}
           </p>
-
-          {/* Sizes */}
-          <div>
-            Size: <span className="font-bold">{selectedSize}</span>
-            <RadioGroup value={selectedSize} onChange={setSelectedSize}>
-              <RadioGroup.Label className="sr-only">
-                3D Print Size
-              </RadioGroup.Label>
-              <div className="mt-2 flex gap-2">
-                {availableSizes.map((plan) => (
-                  <RadioGroup.Option
-                    key={plan}
-                    value={plan}
-                    className={({ checked }) =>
-                      `
-                  ${
-                    checked
-                      ? "bg-indigo-500 text-indigo-50 hover:bg-indigo-600"
-                      : "bg-indigo-100 hover:bg-indigo-200"
-                  }
-                    flex cursor-pointer rounded-lg border border-indigo-900 px-4 py-2 shadow-md duration-150`
-                    }
-                  >
-                    {({ checked }) => (
-                      <div className="flex w-full items-center justify-between text-sm">
-                        <RadioGroup.Label
-                          as="p"
-                          className={`font-medium  ${
-                            checked ? "text-white" : "text-gray-900"
-                          }`}
-                        >
-                          {plan}
-                        </RadioGroup.Label>
-                      </div>
-                    )}
-                  </RadioGroup.Option>
-                ))}
-              </div>
-            </RadioGroup>
-          </div>
 
           {/* Colors */}
           <div>
