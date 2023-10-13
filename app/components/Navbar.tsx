@@ -1,12 +1,45 @@
 import { Transition } from "@headlessui/react";
 import { Form, Link } from "@remix-run/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useOptionalUser } from "~/utils";
 
 export default function Navbar() {
   const [showMenu, setShowMenu] = useState(false);
   const user = useOptionalUser();
 
+  useEffect(() => {
+    const fbRoot = document.createElement("div");
+    fbRoot.setAttribute("id", "fb-root");
+    document.body.appendChild(fbRoot);
+
+    const fbCustomerChat = document.createElement("div");
+    fbCustomerChat.setAttribute("id", "fb-customer-chat");
+    fbCustomerChat.setAttribute("class", "fb-customerchat");
+    fbCustomerChat.setAttribute("page_id", "110859698615468");
+    fbCustomerChat.setAttribute("attribution", "biz_inbox");
+    document.body.appendChild(fbCustomerChat);
+
+    // @ts-ignore
+    window.fbAsyncInit = function () {
+      // @ts-ignore
+      FB.init({
+        xfbml: true,
+        version: "v18.0",
+      });
+    };
+
+    (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      // @ts-ignore
+      js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+      // @ts-ignore
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, "script", "facebook-jssdk");
+  }, []);
   return (
     <>
       <header className="fixed top-0 z-50 h-16 w-full bg-indigo-50 shadow-md shadow-indigo-200">

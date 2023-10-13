@@ -1,14 +1,15 @@
 import type { Blog } from "@prisma/client";
 
-export default function Blogs({ blogs }: {
-  blogs: Blog[]
-}) {
+export default function Blogs({ blogs }: { blogs: Blog[] }) {
   return (
     <section>
       <h1 className="mb-8 text-center text-4xl text-indigo-100">Our blogs</h1>
       <div className="space-y-8 px-4">
         {blogs.map((blog) => (
-          <article key={blog.id} className="prose mx-auto max-w-6xl rounded-xl bg-indigo-300 p-4">
+          <article
+            key={blog.id}
+            className="prose mx-auto max-w-6xl rounded-xl bg-indigo-300 p-4"
+          >
             <header>
               <h1 className="mb-8 text-5xl">
                 {blog.title}
