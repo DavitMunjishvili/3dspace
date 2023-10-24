@@ -31,14 +31,14 @@ export async function loader({ params }: LoaderArgs) {
     images: [productImages.publicURL],
     product: productInfo,
     // availableSizes: ["Small", "Standard", "Large"] as const,
-    availableColors: ["Yellow", "Red", "Green", "Black"] as const,
+    availableColors: ["yellow", "red", "green", "black"] as const,
   });
 }
 
 export default function ProductPage() {
   const { images, product, availableColors } = useLoaderData<typeof loader>();
   const [selectedColor, setSelectedColor] =
-    useState<(typeof availableColors)[number]>("Black");
+    useState<(typeof availableColors)[number]>("black");
   const user = useOptionalUser();
   const navigate = useNavigate();
 

@@ -129,13 +129,17 @@ export type CartType = {
 
 export function generateProductColor(color: string) {
   switch (color) {
-    case "Yellow":
+    case "yellow":
       return "bg-yellow-500";
-    case "Red":
+    case "red":
       return "bg-red-500";
-    case "Green":
+    case "green":
       return "bg-green-500";
-    case "Black":
+    case "blue":
+      return "bg-blue-500";
+    case "black":
       return "bg-black";
+    case "white":
+      return "bg-white";
   }
 }
