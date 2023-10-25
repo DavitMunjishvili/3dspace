@@ -2,6 +2,7 @@ import useEmblaCarousel, { type EmblaCarouselType } from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "@remix-run/react";
+import { showFacebookDialog } from "~/utils";
 
 export default function WelcomeCarousel() {
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
@@ -59,7 +60,10 @@ export default function WelcomeCarousel() {
               >
                 <h2>მაქვს ფაილი</h2>
               </Link>
-              <div className="flex w-full flex-1 cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl">
+              <div
+                onClick={showFacebookDialog}
+                className="flex w-full flex-1 cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl"
+              >
                 <h2>დიზაინერის დახმარება მჭირდება</h2>
               </div>
             </div>

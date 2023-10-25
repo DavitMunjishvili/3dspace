@@ -127,6 +127,11 @@ export type CartType = {
 //   return { localCart: cart, setLocalCart: handleCartUpdate };
 // }
 
+export function showFacebookDialog() {
+  // @ts-ignore
+  FB?.CustomerChat?.showDialog();
+}
+
 export function generateProductColor(color: string) {
   switch (color) {
     case "yellow":
