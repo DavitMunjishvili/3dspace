@@ -67,7 +67,7 @@ export default function ProductPage() {
 
   const addToCart = () => {
     if (user) {
-      fetch(`/cart/add/${product.id}?color=${color}`).then((response) =>
+      fetch(`/cart/add/${product.id}?color=${color?.value}`).then((response) =>
         console.log(response.statusText)
       );
     } else {
