@@ -65,6 +65,7 @@ export default function ProductPage() {
     emblaApi.on("select", onSelect);
   }, [emblaApi, onInit, onSelect]);
 
+  // TODO: this needs to be change for <Form> component and /cart/add/ component
   const addToCart = () => {
     if (user) {
       fetch(`/cart/add/${product.id}?color=${color?.value}`).then((response) =>
