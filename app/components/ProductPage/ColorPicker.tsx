@@ -35,7 +35,7 @@ export default function ProductColorPicker({
 
   return (
     <div>
-      Color: <span className="font-bold">{label}</span>
+      ფერი: <span className="font-bold">{label}</span>
       <input name="color" value={selectedColor?.value || ""} hidden readOnly />
       <RadioGroup value={selectedColor || null} onChange={onChange}>
         <RadioGroup.Label className="sr-only">Color</RadioGroup.Label>
