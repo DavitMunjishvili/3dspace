@@ -26,7 +26,7 @@ export async function loader({ params, request }: LoaderArgs) {
 
   //
   const url = new URL(request.url);
-  const size = url.searchParams.get("size");
+  const size = url.searchParams.get("size") || "default";
   const color = url.searchParams.get("color");
   if (!size || !color)
     return json("missing size and color params", {
