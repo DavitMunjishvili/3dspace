@@ -1,5 +1,5 @@
 import { json, redirect } from "@remix-run/server-runtime";
-import { Link, useLoaderData, useNavigate } from "@remix-run/react";
+import { useLoaderData, useNavigate } from "@remix-run/react";
 
 import type { LoaderArgs } from "@remix-run/server-runtime";
 
@@ -10,7 +10,7 @@ import { useOptionalUser } from "~/utils";
 import ProductColorPicker, {
   type ColorOptionType,
 } from "~/components/ProductPage/ColorPicker";
-import useEmblaCarousel, { EmblaCarouselType } from "embla-carousel-react";
+import useEmblaCarousel, { type EmblaCarouselType } from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 
 export async function loader({ params }: LoaderArgs) {
