@@ -7,10 +7,20 @@ const supabase = createClient(
   { auth: { persistSession: false } }
 );
 
-export async function getProductThumbnail(id: Product["id"]) {
-  const list = await supabase.storage
-    .from("product.images")
-    .list(id.toString());
+export async function getProductImages(id: string) {
+  const list = await supabase.storage.from("product.images").list(id);
+  return (
+    list?.data?.map(
+      (image) =>
+        supabase.storage
+          .from("product.images")
+          .getPublicUrl(`${id}/${image.name}`).data.publicUrl
+    ) || []
+  );
+}
+
+export async function getProductThumbnail(id: string) {
+  const list = await supabase.storage.from("product.images").list(id);
   if (list.error || list.data.length === 0)
     return {
       error: "Couldn't fetch product list (probably folder doesn't exist)",
