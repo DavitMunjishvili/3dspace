@@ -28,7 +28,8 @@ export async function action({ request }: ActionArgs) {
   const archive = formData.get("archive") === "on";
 
   if (!id || !name || !description || !originalPrice || !categories) return {};
-  const response = await updateProduct(
+
+  await updateProduct(
     parseInt(id.toString()),
     name.toString(),
     description.toString(),
@@ -37,6 +38,7 @@ export async function action({ request }: ActionArgs) {
     categories.toString().split("|"),
     archive
   );
+
   return redirect("/admin/products");
 }
 

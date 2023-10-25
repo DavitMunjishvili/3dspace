@@ -1,4 +1,3 @@
-import type { Product } from "@prisma/client";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
