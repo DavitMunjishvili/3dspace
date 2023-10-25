@@ -9,3 +9,63 @@ html {
 code {
   @apply rounded border border-gray-400 bg-gray-200 p-0.5 text-red-800;
 }
+
+/* =========================== */
+/* = Hide number input arrows =*/
+/* =========================== */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* input[type="range"] { */
+/*   -webkit-appearance: none; */
+/*   appearance: none; */
+/*   background: transparent; */
+/*   cursor: pointer; */
+/*   width: 15rem; */
+/* } */
+/**/
+/* input[type="range"]::-webkit-slider-runnable-track { */
+/*   @apply bg-indigo-900 rounded-full h-3; */
+/* } */
+/**/
+/* input[type="range"]::-moz-range-track { */
+/*   @apply bg-indigo-900 rounded-full h-3; */
+/* } */
+/**/
+/* input[type="range"]::-webkit-slider-thumb { */
+/*   -webkit-appearance: none; */
+/*   appearance: none; */
+/*   @apply bg-indigo-300 h-2 w-2; */
+/* } */
+/**/
+/* input[type="range"]::-moz-range-thumb { */
+/*   border: none; */
+/*   border-radius: 0; */
+/*   background-color: #5cd5eb; */
+/*   height: 2rem; */
+/*   width: 1rem; */
+/* } */
+
+/**/
+/* input[type="range"]:focus { */
+/*   outline: none; */
+/* } */
+/**/
+/* input[type="range"]:focus::-webkit-slider-thumb { */
+/*   border: 1px solid #053a5f; */
+/*   outline: 3px solid #053a5f; */
+/*   outline-offset: 0.125rem; */
+/* } */
+/**/
+/* input[type="range"]:focus::-moz-range-thumb { */
+/*   border: 1px solid #053a5f; */
+/*   outline: 3px solid #053a5f; */
+/*   outline-offset: 0.125rem; */
+/* } */

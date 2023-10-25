@@ -46,18 +46,21 @@ export default function WelcomeCarousel() {
                 to="/products/lithophane"
                 className="flex w-full flex-1 cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl"
               >
-                <h2>Lithophane</h2>
+                <h2>ლიტოფეინი</h2>
               </Link>
             </div>
           </div>
           <div className="flex flex-[0_0_100%] flex-col items-center justify-center gap-2 bg-indigo-950 p-6 text-2xl text-indigo-50">
-            <h1>Special print</h1>
+            <h1>სპეციალური შეკვეთა</h1>
             <div className="flex w-full flex-1 items-stretch justify-center gap-4">
+              <Link
+                to="/products/custom"
+                className="flex w-full flex-1 cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl"
+              >
+                <h2>მაქვს ფაილი</h2>
+              </Link>
               <div className="flex w-full flex-1 cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl">
-                <h2>I have a .stl file</h2>
-              </div>
-              <div className="flex w-full flex-1 cursor-pointer items-center justify-center rounded-xl bg-indigo-900 duration-150 hover:text-3xl">
-                <h2>I need help from designer</h2>
+                <h2>დიზაინერის დახმარება მჭირდება</h2>
               </div>
             </div>
           </div>

@@ -11,7 +11,7 @@ export async function getProductThumbnail(id: Product["id"]) {
   const list = await supabase.storage
     .from("product.images")
     .list(id.toString());
-  if (list.error || !list.data)
+  if (list.error || list.data.length === 0)
     return {
       error: "Couldn't fetch product list (probably folder doesn't exist)",
       publicURL: undefined,
@@ -28,5 +28,6 @@ export async function uploadImage(bucket: string, name: string, image: File) {
   const { data, error } = await supabase.storage
     .from(bucket)
     .upload(name, image);
+  console.error({ data, error });
   return { data, error };
 }

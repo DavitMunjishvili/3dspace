@@ -81,7 +81,7 @@ export async function addNewProduct(
   originalPrice: Product["originalPrice"],
   currentPrice: Product["currentPrice"],
   categories: Product["categories"],
-  archive: Product["archive"]
+  archive: Product["archive"] = false
 ) {
   return prisma.product.create({
     data: {

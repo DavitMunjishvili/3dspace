@@ -61,9 +61,9 @@ export default function Products() {
       {/* Product */}
       <div className="grid w-full grid-cols-1 gap-4 px-4 md:grid-cols-2 lg:grid-cols-3">
         {products.length > 0 &&
-          products.map((product) => {
-            return <ProductCard key={product.id} product={product} />;
-          })}
+          products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
       </div>
     </div>
   );

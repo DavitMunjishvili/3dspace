@@ -13,6 +13,7 @@ import {
   addNewProduct,
   getEveryPossibleCategory,
 } from "~/models/product.server";
+import { uploadImage } from "~/filesystem.server";
 
 export async function loader() {
   return getEveryPossibleCategory();
@@ -25,21 +26,45 @@ export async function action({ request }: ActionArgs) {
   const originalPrice = formData.get("originalPrice");
   const currentPrice = formData.get("currentPrice");
   const categories = formData.get("categories");
-  // const images = formData.get("images");
-  // TODO SAVE IMAGES
-  if (!name || !description || !originalPrice || !categories)
+  const images = formData.getAll("images") as File[];
+
+  if (
+    !name ||
+    !description ||
+    !originalPrice ||
+    !categories ||
+    images.length === 0
+  )
     return {
       error:
         "Display Name, Product Description, Original Price and at least one Category is required",
     };
-  await addNewProduct(
+  const { id } = await addNewProduct(
     name.toString(),
     description.toString(),
     originalPrice.toString(),
     currentPrice ? currentPrice.toString() : null,
-    categories.toString().split("|"),
-    false
+    categories.toString().split("|")
   );
+  const uploadPromises = images.map((image) =>
+    uploadImage("product.images", `${id}/${image.name}`, image)
+  );
+
+  await Promise.allSettled(uploadPromises).then((results) => {
+    results.forEach((result) => {
+      if (result.status === "fulfilled" && result.value.data?.path) {
+        console.log(`Image ${result.value.data} uploaded successfully`);
+      } else if (result.status === "fulfilled" && result.value.error?.name) {
+        console.error(
+          `Failed to upload image, Error: ${result.value.error.message}`
+        );
+      } else {
+        console.error("Promise rejected");
+      }
+    });
+  });
+
+  //
   // TODO response messages and/or toast
   return redirect("/admin/products");
 }

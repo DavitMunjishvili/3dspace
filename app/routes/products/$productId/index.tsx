@@ -13,9 +13,9 @@ export async function loader({ params }: LoaderArgs) {
   if (!params || !params?.productId) {
     return redirect("/products");
   }
-  const productInfo = await getProductById(Number(params.productId));
+  const productInfo = await getProductById(parseInt(params.productId));
   if (!productInfo) return redirect("/products");
-  const productImages = await getProductThumbnail(Number(params.productId));
+  const productImages = await getProductThumbnail(parseInt(params.productId));
 
   // GUIDE If you want to get all images use this code snippet:
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -100,8 +100,8 @@ export default function ProductPage() {
                       `
                   ${checked ? "outline-none" : "outline-1 outline-offset-2 "}
                     flex cursor-pointer outline-indigo-900 ${generateProductColor(
-                      color
-                    )} rounded-full border border-black/50 p-3 shadow-md`
+                        color
+                      )} rounded-full border border-black/50 p-3 shadow-md`
                     }
                   ></RadioGroup.Option>
                 ))}
