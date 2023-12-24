@@ -5,6 +5,7 @@ export function loader() {
   return json({
     DATABASE_URL: process.env.DATABASE_URL,
     SESSION_SECRET: process.env.SESSION_SECRET,
+    SUPABASE_KEY: process.env.SUPABASE_KEY,
   });
 }
 
