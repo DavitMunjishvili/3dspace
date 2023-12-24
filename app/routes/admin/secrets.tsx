@@ -22,6 +22,10 @@ export default function Secrets() {
           <span className="font-bold">SESSION_SECRET:</span>{" "}
           <code>{env.SESSION_SECRET}</code>
         </li>
+        <li>
+          <span className="font-bold">SUPABASE_KEY:</span>{" "}
+          <code>{env.SUPABASE_KEY}</code>
+        </li>
       </ul>
     </div>
   );
