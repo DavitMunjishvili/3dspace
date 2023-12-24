@@ -21,6 +21,7 @@ import mainStylesheetUrl from "./styles/index.css";
 import { getUser } from "./session.server";
 import Navbar from "./components/Navbar";
 import Footer from "~/components/Footer";
+import Button from "./components/common/Button";
 
 export const links: LinksFunction = () => {
   return [
@@ -90,19 +91,11 @@ export function CatchBoundary() {
               which means page was{" "}
               <span className="font-bold">{caught.statusText}</span>
             </h2>
-            <div className="flex gap-2">
-              <button
-                onClick={() => navigate(-1)}
-                className="mt-4 block w-full rounded-xl bg-indigo-500 py-2 text-center text-indigo-50 shadow-xl duration-150 hover:bg-indigo-600"
-              >
-                Go Back
-              </button>
-              <Link
-                to="/"
-                className="mt-4 block w-full rounded-xl bg-indigo-500 py-2 text-center text-indigo-50 shadow-xl duration-150 hover:bg-indigo-600"
-              >
-                Go To Home
-              </Link>
+            <div className="mt-4 flex gap-2">
+              <Button onClick={() => navigate(-1)}>უკან დაბრუნება</Button>
+              <Button onClick={() => navigate("/")}>
+                მთავარ გვერდზე დაბრუნება
+              </Button>
             </div>
           </div>
         </div>

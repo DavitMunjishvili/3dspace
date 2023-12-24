@@ -14,6 +14,8 @@ import {
   getEveryPossibleCategory,
 } from "~/models/product.server";
 import { uploadImage } from "~/filesystem.server";
+import CloseButton from "~/components/common/CloseButton";
+import Button from "~/components/common/Button";
 
 export async function loader() {
   return getEveryPossibleCategory();
@@ -121,25 +123,10 @@ export default function New() {
     >
       <div className="fixed inset-0 flex items-center justify-center p-8 backdrop-blur-md backdrop-brightness-50">
         <Dialog.Panel className="relative w-full max-w-lg rounded-xl bg-indigo-50 px-6 py-4">
-          <button
+          <CloseButton
+            className="absolute left-4 top-4"
             onClick={() => navigate(closeDestination)}
-            className="absolute left-4 top-4 rounded-md border-0 bg-red-300 p-0.5 text-white duration-150 hover:bg-red-400"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
+          />
           <Dialog.Title className="text-center text-2xl">
             New Product
           </Dialog.Title>
@@ -290,12 +277,7 @@ export default function New() {
                 />
               </div>
             </div>
-            <button
-              type="submit"
-              className="mt-4 block w-full rounded-md bg-indigo-500 py-2 text-indigo-50 duration-150 hover:bg-indigo-600"
-            >
-              Add
-            </button>
+            <Button fullWidth className="mt-4">Add</Button>
           </Form>
         </Dialog.Panel>
       </div>

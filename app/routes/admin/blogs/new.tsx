@@ -6,6 +6,7 @@ import { type ActionArgs } from "@remix-run/node";
 import { getUser } from "~/session.server";
 import { addNewBlog } from "~/models/blog.server";
 import { redirect } from "@remix-run/server-runtime";
+import CloseButton from "~/components/common/CloseButton";
 
 export async function action({ request }: ActionArgs) {
   const formData = await request.formData();
@@ -39,25 +40,10 @@ export default function NewBlog() {
     >
       <div className="fixed inset-0 flex items-center justify-center p-8 backdrop-blur-md backdrop-brightness-50">
         <Dialog.Panel className="relative max-h-[95vh] w-full max-w-5xl overflow-y-auto rounded-xl bg-indigo-50 px-6 py-4">
-          <button
+          <CloseButton
+            className="absolute left-4 top-4"
             onClick={() => navigate(closeDestination)}
-            className="absolute left-4 top-4 rounded-md border-0 bg-red-300 p-0.5 text-white duration-150 hover:bg-red-400"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="h-6 w-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
+          />
           <Dialog.Title className="text-center text-2xl">New Blog</Dialog.Title>
           <Form method="post">
             <label

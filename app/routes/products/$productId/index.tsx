@@ -12,6 +12,8 @@ import ProductColorPicker, {
 } from "~/components/ProductPage/ColorPicker";
 import useEmblaCarousel, { type EmblaCarouselType } from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
+import Button from "~/components/common/Button";
+import CloseButton from "~/components/common/CloseButton";
 
 export async function loader({ params }: LoaderArgs) {
   if (!params || !params?.productId) {
@@ -33,6 +35,9 @@ export async function loader({ params }: LoaderArgs) {
 export default function ProductPage() {
   const { images, product } = useLoaderData<typeof loader>();
   const [color, setColor] = useState<ColorOptionType | null>(null);
+  const [addedToCart, setAddedToCart] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const user = useOptionalUser();
   const navigate = useNavigate();
 
@@ -55,6 +60,14 @@ export default function ProductPage() {
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, []);
 
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
   useEffect(() => {
     if (!emblaApi) return;
 
@@ -66,14 +79,16 @@ export default function ProductPage() {
   }, [emblaApi, onInit, onSelect]);
 
   // TODO: this needs to be change for <Form> component and /cart/add/ component
-  const addToCart = () => {
+  const addToCart = async () => {
+    setLoading(true);
+    console.log(loading);
     if (user) {
-      fetch(`/cart/add/${product.id}?color=${color?.value}`).then((response) =>
-        console.log(response.statusText)
-      );
+      await fetch(`/cart/add/${product.id}?color=${color?.value}`);
+      setAddedToCart(true);
     } else {
       navigate("/login");
     }
+    setLoading(false);
   };
 
   const isFormValid = !!color;
@@ -107,6 +122,44 @@ export default function ProductPage() {
               ></li>
             ))}
           </ul>
+          <button
+            className="absolute left-5 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-full border border-indigo-900 bg-indigo-200/50 p-1 text-indigo-900 shadow backdrop-blur-sm duration-150 hover:bg-indigo-200"
+            onClick={scrollPrev}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="h-5 w-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M15.75 19.5L8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
+          <button
+            className="absolute right-5 top-1/2 z-10 -translate-y-1/2 cursor-pointer rounded-full border border-indigo-900 bg-indigo-200/50 p-1 text-indigo-900 shadow backdrop-blur-sm duration-150 hover:bg-indigo-200"
+            onClick={scrollNext}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="h-5 w-5"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M8.25 4.5l7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </button>
         </div>
         <div className="flex flex-col space-y-8">
           {/* Name */}
@@ -132,14 +185,20 @@ export default function ProductPage() {
           <p className="border-b border-t border-neutral-300/50 py-4">
             {product.description}
           </p>
+          {addedToCart && (
+            <div className="flex items-center justify-between rounded-md bg-green-400 p-4">
+              <p>პროდუქტი დაემატა კალათაში</p>
+              <CloseButton onClick={() => setAddedToCart(false)} />
+            </div>
+          )}
           <div>
-            <button
+            <Button
               onClick={addToCart}
+              loading={loading}
               disabled={!isFormValid}
-              className="cursor-pointer rounded-lg bg-indigo-500 px-4 py-2 text-indigo-50 shadow-md duration-150 hover:bg-indigo-600 disabled:cursor-not-allowed disabled:bg-gray-400"
             >
               კალათაში დამატება
-            </button>
+            </Button>
           </div>
         </div>
       </div>

@@ -1,5 +1,6 @@
-import { useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import type { LoaderArgs } from "@remix-run/server-runtime";
+import Button from "~/components/common/Button";
 import ProductCard from "~/components/ProductCard";
 import {
   getFilters,
@@ -25,18 +26,18 @@ export async function meta() {
 }
 
 export default function Products() {
-  const { products } = useLoaderData<typeof loader>();
+  const { products, filters } = useLoaderData<typeof loader>();
 
   return (
     <div className="mx-8 mt-8 flex max-w-7xl gap-4 lg:mx-auto">
       {/* Filters */}
-      {/* <div className="w-80 self-start px-4 text-lg font-semibold text-indigo-50">
-        <p className="text-center">Filters</p>
+      <div className="w-80 self-start px-4 text-lg font-semibold text-indigo-50">
+        <p className="text-center">ფილტრები</p>
         <Form method="get" noValidate>
           {Object.keys(filters).map((key) => {
             return (
               <div key={key} className="my-2 text-base font-normal capitalize">
-                <p className="mb-2 font-semibold">{key}</p>
+                {/* <p className="mb-2 font-semibold">{key}</p> */}
                 <ul>
                   {filters[key].map((e: string) => (
                     <li key={e} className="my-1">
@@ -55,8 +56,11 @@ export default function Products() {
               </div>
             );
           })}
+          <Button fullWidth className="mt-4">
+            გაფილტრვა
+          </Button>
         </Form>
-      </div> */}
+      </div>
 
       {/* Product */}
       <div className="grid w-full grid-cols-1 gap-4 px-4 md:grid-cols-2 lg:grid-cols-3">

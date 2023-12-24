@@ -59,6 +59,7 @@ export function getAllProduct() {
 export async function getFilters() {
   const products = await prisma.product.findMany({
     select: { categories: true },
+    where: { archive: false },
   });
   let categories: string[] = [];
   products.map((product) => {
